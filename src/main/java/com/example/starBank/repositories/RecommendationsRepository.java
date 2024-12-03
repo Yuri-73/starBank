@@ -1,5 +1,6 @@
 package com.example.starBank.repositories;
 
+import com.example.starBank.model.Rule;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,19 +24,21 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения значения amount из одной транзакции, полученной случайным образом
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает 4-значное число amount или 0
      */
-    public int getRandomTransactionAmount(UUID user){
+    public int getRandomTransactionAmount(UUID id) {
         Integer result = jdbcTemplate.queryForObject(
                 "SELECT amount FROM transactions t WHERE t.user_id = ? LIMIT 1",
                 Integer.class,
-                user);
+                id);
         return result != null ? result : 0;
     }
 
     /**
      * Метод получения общего количества продуктов типа DEBIT для выбранного клиента
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает общее количество продуктов типа DEBIT (снижено до одного, что удовлетворяет условию)
      */
@@ -47,6 +50,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общего количества продуктов типа INVEST для выбранного клиента
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает общее количество продуктов типа INVEST
      */
@@ -58,6 +62,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общей суммы пополнений по продуктам типа SAVING для выбранного клиента
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает общую сумму пополнений по продуктам типа SAVING
      */
@@ -73,6 +78,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общей суммы пополнений по продуктам типа DEBIT для выбранного клиента
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает общую сумму пополнений для продуктов типа DEBIT
      */
@@ -88,6 +94,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общей суммы трат по продуктам типа DEBIT для выбранного клиента
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает общую сумму трат по продуктам типа DEBIT
      */
@@ -103,6 +110,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общего количества продуктов типа CREDIT для выбранного клиента
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает общее количество продуктов типа CREDIT (снижено до одного, что удовлетворяет условию)
      */
@@ -111,5 +119,37 @@ public class RecommendationsRepository {
                 "SELECT COUNT(*) FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ? LIMIT 1",
                 Integer.class, id, debit, credit);
     }
+
+    public Boolean getUserOfResult(UUID id, Rule rule) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) >=1  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
+                Boolean.class, id, rule.getArguments()[0]);
+    }
+
+    public Boolean getActiveUserOfResult(UUID id, Rule rule) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) >=5  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
+                Boolean.class, id, rule.getArguments()[0]);
+    }
+
+    public Boolean getTransactionSumCompareResult(UUID id, Rule rule) {
+        return jdbcTemplate.queryForObject(
+                "SELECT SUM(t.amount) ? ? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ?",
+                Boolean.class, rule.getArguments()[2], rule.getArguments()[3], id, rule.getArguments()[0], rule.getArguments()[1]);
+
+    }
+
+    public Boolean getTransactionSumCompareDepositWithDrawResult(UUID id, Rule rule) {
+
+        return jdbcTemplate.queryForObject(
+                "SELECT (SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id WHERE" +
+                        " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT') ? " +
+                        "(SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id " +
+                        "WHERE t.user_id = ? AND p.type = ? AND t.TYPE = 'WITHDRAW');",
+                Boolean.class,
+                id, rule.getArguments()[0], rule.getArguments()[1], id, rule.getArguments()[0]);
+
+    }
+
 
 }
