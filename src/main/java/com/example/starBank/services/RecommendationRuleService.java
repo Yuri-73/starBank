@@ -28,12 +28,8 @@ public class RecommendationRuleService {
         return recommendationWithRules;
     }
 
-//    public List<RecommendationWithRules> getAllRecommendationWithRules() {
-//        return recommendationsRuleRepository.findAll();
-//    }
+    public List<RecommendationWithRules> getAllRecommendationWithRules() {
+        return recommendationsRuleRepository.findAll();
+    }
 }
 
-//    public Collection<Student> getAllStudent() {
-//        logger.info("Старт метода getAllStudent");
-//        return studentRepository.findAll();
-//    }

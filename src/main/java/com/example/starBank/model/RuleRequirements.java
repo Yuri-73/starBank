@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ruleRequirements")
+@Table(name = "rule_requirements")
 public class RuleRequirements {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,27 +27,26 @@ public class RuleRequirements {
 
     @ManyToOne(fetch = FetchType.EAGER)
 //    @JsonIgnore
-    @JoinColumn(name = "recommendationWithRules_id")
+    @JoinColumn(name = "recommendation_with_rules_id")
     private RecommendationWithRules recommendationWithRules;
 
-    public RuleRequirements(Long id, String query, String arguments, boolean negate, RecommendationWithRules recommendationWithRules) {
+    public RuleRequirements(Long id, String query, String arguments, boolean negate) {
         this.id = id;
         this.query = query;
         this.arguments = arguments;
         this.negate = negate;
-        this.recommendationWithRules = recommendationWithRules;
     }
 
     public RuleRequirements() {
     }
 
-//    public RecommendationWithRules getRecommendationWithRules() {
-//        return recommendationWithRules;
-//    }
-//
-//    public void setRecommendationWithRules(RecommendationWithRules recommendationWithRules) {
-//        this.recommendationWithRules = recommendationWithRules;
-//    }
+    public RecommendationWithRules getRecommendationWithRules() {
+        return recommendationWithRules;
+    }
+
+    public void setRecommendationWithRules(RecommendationWithRules recommendationWithRules) {
+        this.recommendationWithRules = recommendationWithRules;
+    }
 
     public void setId(Long id) {
         this.id = id;

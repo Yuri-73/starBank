@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import java.util.*;
 
 @Entity
-@Table(name = "recommendationWithRules")
+@Table(name = "recommendation_with_rules")
 public class RecommendationWithRules {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class RecommendationWithRules {
     private String text;
 
     @OneToMany()
-    @JoinColumn(name="Recommend")
+//    @JoinColumn()
     private List<RuleRequirements> ruleRequirements;
 
     public RecommendationWithRules(Long id, String name, UUID productId, String text, List<RuleRequirements> ruleRequirements) {

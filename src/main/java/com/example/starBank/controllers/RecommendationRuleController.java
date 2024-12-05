@@ -37,8 +37,8 @@ public class RecommendationRuleController {
         return ResponseEntity.ok(recommendationRuleService.findRecommendationWithRules(id));
     }
 
-//    @GetMapping() // GET http://localhost:8090/student
-//    public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
-//        return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
-//    }
+    @GetMapping() // GET http://localhost:8090/student
+    public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
+        return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
+    }
 }
