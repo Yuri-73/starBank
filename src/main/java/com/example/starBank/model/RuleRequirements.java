@@ -1,5 +1,6 @@
 package com.example.starBank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import java.util.Objects;
 @Table(name = "ruleRequirements")
 public class RuleRequirements {
     @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -25,6 +26,7 @@ public class RuleRequirements {
     boolean negate;
 
     @ManyToOne(fetch = FetchType.EAGER)
+//    @JsonIgnore
     @JoinColumn(name = "recommendationWithRules_id")
     private RecommendationWithRules recommendationWithRules;
 
@@ -39,13 +41,13 @@ public class RuleRequirements {
     public RuleRequirements() {
     }
 
-    public RecommendationWithRules getRecommendationWithRules() {
-        return recommendationWithRules;
-    }
-
-    public void setRecommendationWithRules(RecommendationWithRules recommendationWithRules) {
-        this.recommendationWithRules = recommendationWithRules;
-    }
+//    public RecommendationWithRules getRecommendationWithRules() {
+//        return recommendationWithRules;
+//    }
+//
+//    public void setRecommendationWithRules(RecommendationWithRules recommendationWithRules) {
+//        this.recommendationWithRules = recommendationWithRules;
+//    }
 
     public void setId(Long id) {
         this.id = id;
