@@ -1,6 +1,7 @@
 package com.example.starBank.controllers;
 
 import com.example.starBank.model.RecommendationWithRules;
+import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.services.RecommendationRuleService;
 import com.example.starBank.services.RecommendationService;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("rule")
@@ -22,7 +25,7 @@ public class RecommendationRuleController {
     @PostMapping
     public ResponseEntity<RecommendationWithRules> createRecommendationWithRules(@RequestBody RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules-1: " + recommendationWithRules);
-        RecommendationWithRules recommendationWithRules1 = recommendationRuleService.createRecommendationRuleService(recommendationWithRules);
+        RecommendationWithRules recommendationWithRules1 = recommendationRuleService.createRecommendationRules(recommendationWithRules);
         return ResponseEntity.ok(recommendationWithRules1);
     }
 
@@ -40,5 +43,10 @@ public class RecommendationRuleController {
     @GetMapping() // GET http://localhost:8090/student
     public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
+    }
+
+    @GetMapping("recommmendation/{id}")
+    public ResponseEntity<List<RecommendationWithRules>> getUser(@PathVariable UUID id) {
+        return ResponseEntity.ok(recommendationRuleService.getRecommendationRules(id));
     }
 }

@@ -25,15 +25,14 @@ public class RecommendationWithRules {
     private String text;
 
     @OneToMany()
-//    @JoinColumn()
+    @JoinColumn()
     private List<RuleRequirements> ruleRequirements;
 
-    public RecommendationWithRules(Long id, String name, UUID productId, String text, List<RuleRequirements> ruleRequirements) {
+    public RecommendationWithRules(Long id, String name, UUID productId, String text) {
         this.id = id;
         this.name = name;
         this.productId = productId;
         this.text = text;
-        this.ruleRequirements = ruleRequirements;
     }
 
     public RecommendationWithRules() {
@@ -75,7 +74,7 @@ public class RecommendationWithRules {
 
     @Override
     public String toString() {
-        return "ProductDynamicRule{" +
+        return "RecommendationWithRules{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", idProduct=" + productId +

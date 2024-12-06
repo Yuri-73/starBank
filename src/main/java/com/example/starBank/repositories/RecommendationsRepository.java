@@ -111,5 +111,4 @@ public class RecommendationsRepository {
                 "SELECT COUNT(*) FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ? LIMIT 1",
                 Integer.class, id, debit, credit);
     }
-
 }

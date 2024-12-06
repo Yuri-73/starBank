@@ -16,7 +16,8 @@ CREATE TABLE rule_requirements
     query     TEXT NOT NULL,
     arguments TEXT NOT NULL,
     negate    BOOLEAN,
-    recommendation_with_rules_id integer not null
+    recommendation_with_rules_id BIGSERIAL NOT NULL
         constraint recommendation_with_rules_id_fk
         references recommendation_with_rules
 );
+
