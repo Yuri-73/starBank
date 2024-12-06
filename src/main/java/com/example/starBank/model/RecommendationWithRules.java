@@ -10,7 +10,7 @@ import java.util.*;
 @Table(name = "recommendation_with_rules")
 public class RecommendationWithRules {
     @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id")
     private Long id;
@@ -18,26 +18,24 @@ public class RecommendationWithRules {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "productId")
+    @Column(name = "product_id")
     private UUID productId;
 
     @Column(name = "text")
     private String text;
 
     @OneToMany()
-//    @JoinColumn()
+    @JoinColumn()
     private List<RuleRequirements> ruleRequirements;
 
-    public RecommendationWithRules(Long id, String name, UUID productId, String text, List<RuleRequirements> ruleRequirements) {
+    public RecommendationWithRules(Long id, String name, UUID productId, String text) {
         this.id = id;
         this.name = name;
         this.productId = productId;
         this.text = text;
-        this.ruleRequirements = ruleRequirements;
     }
 
     public RecommendationWithRules() {
-
     }
 
     public Long getId() {
@@ -75,7 +73,7 @@ public class RecommendationWithRules {
 
     @Override
     public String toString() {
-        return "ProductDynamicRule{" +
+        return "RecommendationWithRules{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", idProduct=" + productId +

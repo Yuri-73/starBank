@@ -12,8 +12,8 @@ import java.util.Objects;
 @Table(name = "rule_requirements")
 public class RuleRequirements {
     @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "rule_requirements_id")
     private Long id;
 
     @Column(name = "query")
@@ -26,7 +26,7 @@ public class RuleRequirements {
     boolean negate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-//    @JsonIgnore
+    @JsonIgnore
     @JoinColumn(name = "recommendation_with_rules_id")
     private RecommendationWithRules recommendationWithRules;
 
