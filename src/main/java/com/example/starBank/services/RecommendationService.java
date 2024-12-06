@@ -1,6 +1,8 @@
 package com.example.starBank.services;
 
 import com.example.starBank.model.Recommendation;
+import com.example.starBank.model.RecommendationWithRules;
+import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.recommendation_rules.Invest500;
 import com.example.starBank.recommendation_rules.RecommendationRuleSet;
 import com.example.starBank.recommendation_rules.SimpleCredit;
@@ -54,8 +56,71 @@ public class RecommendationService {
             listOfRecommendation.add(recommendation3);
         }
         if (listOfRecommendation.size() == 0) {
-            listOfRecommendation.add(new Recommendation(0,"Рекомендуемых продуктов нет", "-"));
+            listOfRecommendation.add(new Recommendation(null,"Рекомендуемых продуктов нет", "-"));
         }
         return listOfRecommendation;
+    }
+
+    /*Публичный метод для создания листа рекомендаций (пока пустого), прохода по листу
+        объектов класса RecommendationWithRules и вызова приватного метода recommendationAppliance
+        */
+    public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
+        List<Recommendation> listOfRecommendation = new ArrayList<>();
+        for (RecommendationWithRules r : recommendationsWithRules) {
+            if (recommendationAppliance(id, r.getRuleRequirements())) {
+                listOfRecommendation.add(new Recommendation(r.getProductId(), r.getName(), r.getText()));
+            }
+        }
+        if (listOfRecommendation.isEmpty()) {
+            listOfRecommendation.add(new Recommendation(null,"Рекомендуемых продуктов нет", "-"));
+        }
+        return listOfRecommendation;
+    }
+
+    /*Приватный метод для перебора правил из массива и передачу его в метод ruleSwitch, где
+    правило проверяется на выполнение условий.
+    Так же в случае isNegate = true, возвращаемый boolean будет изменен на противоположное значение.
+    В случае если правило не выполнено, следующее правило проверяться не будет и будет возвращено
+    значение false.
+    */
+    private Boolean recommendationAppliance(UUID id, List<RuleRequirements> rules) {
+        boolean tmp = false;
+        for (RuleRequirements rule : rules) {
+            if (rule.isNegate()) {
+                tmp = !ruleSwitch(id, rule);
+            } else {
+                tmp = ruleSwitch(id, rule);
+            }
+            if (!tmp) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /*Приватный метод со switch. Здесь мы проверяем значение query из класса Rule и вызываем
+    соответствующий ему case, где вызывается метод из репозитория.
+    В случае отсутствия нужного case будет возвращено значение false
+    */
+    private Boolean ruleSwitch(UUID id, RuleRequirements rule) {
+        switch (rule.getQuery()) {
+            case "USER_OF" -> {
+                return recommendationsRepository.getUserOfResult(id, rule);
+            }
+            case "ACTIVE_USER_OF" -> {
+                return recommendationsRepository.getActiveUserOfResult(id, rule);
+            }
+            case "TRANSACTION_SUM_COMPARE" -> {
+                return recommendationsRepository.getTransactionSumCompareResult(id, rule);
+            }
+            case "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW" -> {
+                return recommendationsRepository.getTransactionSumCompareDepositWithDrawResult(id, rule);
+            }
+            default ->
+            {
+                return false;
+            }
+        }
     }
 }

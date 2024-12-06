@@ -1,5 +1,6 @@
 package com.example.starBank.repositories;
 
+import com.example.starBank.model.RuleRequirements;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -26,11 +27,11 @@ public class RecommendationsRepository {
      * @param id для поиска по id клиента банка
      * @return Возвращает 4-значное число amount или 0
      */
-    public int getRandomTransactionAmount(UUID user){
+    public int getRandomTransactionAmount(UUID id){
         Integer result = jdbcTemplate.queryForObject(
                 "SELECT amount FROM transactions t WHERE t.user_id = ? LIMIT 1",
                 Integer.class,
-                user);
+                id);
         return result != null ? result : 0;
     }
 
@@ -111,4 +112,38 @@ public class RecommendationsRepository {
                 "SELECT COUNT(*) FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ? LIMIT 1",
                 Integer.class, id, debit, credit);
     }
+
+    public Boolean getUserOfResult(UUID id, RuleRequirements rule) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) >=1  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
+                Boolean.class, id, rule.getArguments());
+    }
+
+    public Boolean getActiveUserOfResult(UUID id, RuleRequirements rule) {
+        return jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) >=5  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
+                Boolean.class, id, rule.getArguments());
+    }
+
+    public Boolean getTransactionSumCompareResult(UUID id, RuleRequirements rule) {
+        String[] arguments = rule.getArguments().split(",");
+        return jdbcTemplate.queryForObject(
+                "SELECT SUM(t.amount) ? ? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ?",
+                Boolean.class, arguments[2], arguments[3], id, arguments[0], arguments[1]);
+
+    }
+
+    public Boolean getTransactionSumCompareDepositWithDrawResult(UUID id, RuleRequirements rule) {
+        String[] arguments = rule.getArguments().split(",");
+        return jdbcTemplate.queryForObject(
+                "SELECT (SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id WHERE" +
+                        " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT') ? " +
+                        "(SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id " +
+                        "WHERE t.user_id = ? AND p.type = ? AND t.TYPE = 'WITHDRAW');",
+                Boolean.class,
+                id, arguments[0], arguments[1], id, arguments[0]);
+
+    }
+
+
 }

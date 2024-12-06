@@ -12,6 +12,8 @@ public class RecommendationWithRules {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
+
+
     @Column(name = "id")
     private Long id;
 
