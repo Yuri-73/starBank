@@ -45,8 +45,4 @@ public class RecommendationRuleController {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
     }
 
-    @GetMapping("recommmendation/{id}")
-    public ResponseEntity<List<RecommendationWithRules>> getUser(@PathVariable UUID id) {
-        return ResponseEntity.ok(recommendationRuleService.getRecommendationRules(id));
-    }
 }

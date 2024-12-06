@@ -128,8 +128,8 @@ public class RecommendationsRepository {
     public Boolean getTransactionSumCompareResult(UUID id, RuleRequirements rule) {
         String[] arguments = rule.getArguments().split(",");
         return jdbcTemplate.queryForObject(
-                "SELECT SUM(t.amount) ? ? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ?",
-                Boolean.class, arguments[2], arguments[3], id, arguments[0], arguments[1]);
+                "SELECT SUM(t.amount)" +arguments[2] + "? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ?",
+                Boolean.class, arguments[3], id, arguments[0], arguments[1]);
 
     }
 
@@ -137,11 +137,11 @@ public class RecommendationsRepository {
         String[] arguments = rule.getArguments().split(",");
         return jdbcTemplate.queryForObject(
                 "SELECT (SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id WHERE" +
-                        " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT') ? " +
+                        " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT')" + arguments[1] +
                         "(SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id " +
                         "WHERE t.user_id = ? AND p.type = ? AND t.TYPE = 'WITHDRAW');",
                 Boolean.class,
-                id, arguments[0], arguments[1], id, arguments[0]);
+                id, arguments[0], id, arguments[0]);
 
     }
 

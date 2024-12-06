@@ -27,7 +27,7 @@ public class Recommendation {
     public Recommendation() {
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
