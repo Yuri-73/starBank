@@ -1,10 +1,7 @@
 package com.example.starBank.services;
 
 import com.example.starBank.model.RecommendationWithRules;
-import com.example.starBank.model.RuleRequirements;
-import com.example.starBank.repositories.QueryByConditionRuleRepository;
 import com.example.starBank.repositories.RecommendationsRuleRepository;
-import com.example.starBank.repositories.RuleRequirementsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -45,7 +42,7 @@ public class RecommendationRuleService {
             }
         }
         if (recommendationsByRules.isEmpty()) {
-            recommendationsByRules.add(new RecommendationWithRules(0l, "Рекомендуемых продуктов нет", null, null));
+            recommendationsByRules.add(new RecommendationWithRules());
         }
         return recommendationsByRules;
     }

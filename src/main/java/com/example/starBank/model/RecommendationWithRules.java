@@ -1,8 +1,6 @@
 package com.example.starBank.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
 import java.util.*;
 
@@ -28,7 +26,7 @@ public class RecommendationWithRules {
     @JoinColumn()
     private List<RuleRequirements> ruleRequirements;
 
-    public RecommendationWithRules(Long id, String name, UUID productId, String text) {
+    public RecommendationWithRules(Long id, String name, String text, UUID productId) {
         this.id = id;
         this.name = name;
         this.productId = productId;
@@ -56,6 +54,10 @@ public class RecommendationWithRules {
 
     public List<RuleRequirements> getRuleRequirements() {
         return ruleRequirements;
+    }
+
+    public void setRuleRequirements(List<RuleRequirements> ruleRequirements) {
+        this.ruleRequirements = ruleRequirements;
     }
 
     @Override
