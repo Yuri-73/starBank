@@ -7,7 +7,7 @@ import java.util.*;
 @Entity
 @Table(name = "recommendation_with_rules")
 public class RecommendationWithRules {
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id")
@@ -22,12 +22,10 @@ public class RecommendationWithRules {
     @Column(name = "text")
     private String text;
 
-    @OneToMany()
-    @JoinColumn()
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
     private List<RuleRequirements> ruleRequirements;
 
-    public RecommendationWithRules(Long id, String name, String text, UUID productId) {
-        this.id = id;
+    public RecommendationWithRules(String name, String text, UUID productId) {
         this.name = name;
         this.productId = productId;
         this.text = text;
@@ -38,6 +36,22 @@ public class RecommendationWithRules {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setProductId(UUID productId) {
+        this.productId = productId;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getName() {

@@ -1,25 +1,27 @@
 --liquibase formatted sql
 
 --changeset Yuri:1
-CREATE TABLE recommendation_with_rules
+
+create table if not exists public.recommendation_with_rules
 (
-    id        BIGSERIAL PRIMARY KEY,
-    name      TEXT NOT NULL,
-    product_id UUID NOT NULL,
-    text      TEXT NOT NULL
-);
+    id         BIGSERIAL PRIMARY KEY,
+    name       varchar(255),
+    product_id uuid,
+    text       varchar(4000)
+    );
+
 
 --changeset Yuri:2
-CREATE TABLE rule_requirements
+
+create table if not exists public.rule_requirements
 (
-    rule_requirements_id  BIGSERIAL PRIMARY KEY,
-    query     TEXT NOT NULL,
-    arguments TEXT NOT NULL,
-    negate    BOOLEAN,
-    recommendation_with_rules_id BIGINT NOT NULL
-        constraint recommendation_with_rules_id_fk
-        references recommendation_with_rules
-);
+    id            BIGSERIAL PRIMARY KEY,
+    arguments     varchar(255),
+    negate        boolean,
+    query         varchar(255),
+    recommendation_with_rules_id bigint constraint recommendation_with_rules_id_fk references public.recommendation_with_rules
+    );
+
 
 
 

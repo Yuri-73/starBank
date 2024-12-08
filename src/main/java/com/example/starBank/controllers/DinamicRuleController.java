@@ -14,11 +14,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("rule")
-public class RecommendationRuleController {
+public class DinamicRuleController {
 
     private final RecommendationRuleService recommendationRuleService;
 
-    public RecommendationRuleController(RecommendationRuleService recommendationRuleService) {
+    public DinamicRuleController(RecommendationRuleService recommendationRuleService) {
         this.recommendationRuleService = recommendationRuleService;
     }
 
@@ -33,7 +33,7 @@ public class RecommendationRuleController {
     public ResponseEntity<RecommendationWithRules> findRecommendationWithRules(@PathVariable Long id) {
         if (recommendationRuleService.findRecommendationWithRules(id) == null) {
             /**
-             * Вывод 404 по варианту 1
+             * Вывод 404
              */
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -48,5 +48,12 @@ public class RecommendationRuleController {
     @GetMapping("recommmendation/{id}")
     public ResponseEntity<List<RecommendationWithRules>> getUser(@PathVariable UUID id) {
         return ResponseEntity.ok(recommendationRuleService.getRecommendationRules(id));
+    }
+
+    @PostMapping("rule-create")
+    public ResponseEntity<RuleRequirements> createRecommendationWithRules(@RequestBody RuleRequirements ruleRequirements) {
+        System.out.println("ruleRequirements: " + ruleRequirements);
+        RuleRequirements ruleRequirements1 = recommendationRuleService.createRules(ruleRequirements);
+        return ResponseEntity.ok(ruleRequirements);
     }
 }

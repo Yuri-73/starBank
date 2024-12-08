@@ -1,19 +1,15 @@
 package com.example.starBank.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
 @Table(name = "rule_requirements")
 public class RuleRequirements {
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rule_requirements_id")
     private Long id;
 
     @Column(name = "query")
@@ -25,19 +21,31 @@ public class RuleRequirements {
     @Column(name = "negate")
     boolean negate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JsonIgnore
-    @JoinColumn(name = "recommendation_with_rules_id")
     private RecommendationWithRules recommendationWithRules;
 
-    public RuleRequirements(Long id, String query, String arguments, boolean negate) {
+    public RuleRequirements(Long id, String query, String arguments, boolean negate, RecommendationWithRules recommendationWithRules) {
         this.id = id;
         this.query = query;
         this.arguments = arguments;
         this.negate = negate;
+        this.recommendationWithRules = recommendationWithRules;
     }
 
     public RuleRequirements() {
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public void setArguments(String arguments) {
+        this.arguments = arguments;
+    }
+
+    public void setNegate(boolean negate) {
+        this.negate = negate;
     }
 
     public RecommendationWithRules getRecommendationWithRules() {

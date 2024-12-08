@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public class QueryByConditionRuleRepository {
+public class DinamicRuleRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public QueryByConditionRuleRepository(@Qualifier("recommendationsJdbcTemplate") JdbcTemplate jdbcTemplate) {
+    public DinamicRuleRepository(@Qualifier("recommendationsJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

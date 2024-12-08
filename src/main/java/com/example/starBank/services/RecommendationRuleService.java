@@ -1,7 +1,9 @@
 package com.example.starBank.services;
 
 import com.example.starBank.model.RecommendationWithRules;
+import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.repositories.RecommendationsRuleRepository;
+import com.example.starBank.repositories.RuleRequirementsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -10,16 +12,29 @@ import java.util.*;
 public class RecommendationRuleService {
 
     private RecommendationsRuleRepository recommendationsRuleRepository;
-
+    private RuleRequirementsRepository ruleRequirementsRepository;
     private SimpleCreditRuleService simpleCreditRuleService;
 
-    public RecommendationRuleService(RecommendationsRuleRepository recommendationsRuleRepository, SimpleCreditRuleService simpleCreditRuleService) {
+    public RecommendationRuleService(RecommendationsRuleRepository recommendationsRuleRepository,
+                                     RuleRequirementsRepository ruleRequirementsRepository,
+                                     SimpleCreditRuleService simpleCreditRuleService) {
         this.recommendationsRuleRepository = recommendationsRuleRepository;
         this.simpleCreditRuleService = simpleCreditRuleService;
+        this.ruleRequirementsRepository = ruleRequirementsRepository;
     }
+
+    public RuleRequirements createRules(RuleRequirements ruleRequirements) {
+        System.out.println("ruleRequirements2: " + ruleRequirements);
+
+        return ruleRequirementsRepository.save(ruleRequirements);
+    }
+
+
 
     public RecommendationWithRules createRecommendationRules(RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules: " + recommendationWithRules);
+        recommendationWithRules.getRuleRequirements().stream()
+                .forEach(ruleRequirements -> ruleRequirements.setRecommendationWithRules(recommendationWithRules));
         return recommendationsRuleRepository.save(recommendationWithRules);
     }
 
@@ -46,6 +61,8 @@ public class RecommendationRuleService {
         }
         return recommendationsByRules;
     }
+
+
 }
 
 
