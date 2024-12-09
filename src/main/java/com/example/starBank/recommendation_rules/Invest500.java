@@ -13,7 +13,7 @@ public class Invest500 implements RecommendationRuleSet{
     private final Recommendation recommendation;
 
     public Invest500(RecommendationsRepository repository) {
-        recommendation = new Recommendation(1,"Invest 500", "Откройте свой путь к успеху с индивидуальным" +
+        recommendation = new Recommendation(UUID.randomUUID(),"Invest 500", "Откройте свой путь к успеху с индивидуальным" +
                 " инвестиционным счетом (ИИС) от нашего банка! Воспользуйтесь налоговыми льготами и начните" +
                 " инвестировать с умом. Пополните счет до конца года и получите выгоду в виде вычета на взнос " +
                 "в следующем налоговом периоде. Не упустите возможность разнообразить свой портфель, снизить риски" +

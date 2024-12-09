@@ -1,6 +1,7 @@
 package com.example.starBank.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Recommendation {
     /**
@@ -10,14 +11,14 @@ public class Recommendation {
     /**
      * Порядковый номер рекомендации
      */
-    private int id;
+    private UUID id;
 
     /**
     * Текст рекомендации
     */
     private String text;
 
-    public Recommendation(int id, String name, String text) {
+    public Recommendation(UUID id, String name, String text) {
         this.id = id;
         this.name = name;
         this.text = text;
@@ -26,7 +27,7 @@ public class Recommendation {
     public Recommendation() {
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -57,6 +58,6 @@ public class Recommendation {
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 ", text='" + text + '\'' +
-                '}';
+                '}' + "\n";
     }
 }

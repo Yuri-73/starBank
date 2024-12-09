@@ -3,8 +3,8 @@ package com.example.starBank.controllers;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.services.RecommendationRuleService;
-import com.example.starBank.services.RecommendationService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,47 +13,40 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("rule")
-public class DinamicRuleController {
+@RequestMapping("/rule")
+public class RecommendationWithRuleController {
 
     private final RecommendationRuleService recommendationRuleService;
 
-    public DinamicRuleController(RecommendationRuleService recommendationRuleService) {
+    public RecommendationWithRuleController(RecommendationRuleService recommendationRuleService) {
         this.recommendationRuleService = recommendationRuleService;
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<RecommendationWithRules> createRecommendationWithRules(@RequestBody RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules-1: " + recommendationWithRules);
         RecommendationWithRules recommendationWithRules1 = recommendationRuleService.createRecommendationRules(recommendationWithRules);
         return ResponseEntity.ok(recommendationWithRules1);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RecommendationWithRules> findRecommendationWithRules(@PathVariable Long id) {
-        if (recommendationRuleService.findRecommendationWithRules(id) == null) {
-            /**
-             * Вывод 404
-             */
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(recommendationRuleService.findRecommendationWithRules(id));
-    }
+//    @GetMapping("/get/{id}")
+//    public ResponseEntity<RecommendationWithRules> findRecommendationById(@PathVariable Long id) {
+//        if (recommendationRuleService.findRecommendationWithRules(id) == null) {
+//            /**
+//             * Вывод 404
+//             */
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return ResponseEntity.ok(recommendationRuleService.findRecommendationWithRules(id));
+//    }
 
     @GetMapping() // GET http://localhost:8090/student
     public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
     }
 
-    @GetMapping("recommmendation/{id}")
-    public ResponseEntity<List<RecommendationWithRules>> getUser(@PathVariable UUID id) {
-        return ResponseEntity.ok(recommendationRuleService.getRecommendationRules(id));
-    }
-
-    @PostMapping("rule-create")
-    public ResponseEntity<RuleRequirements> createRecommendationWithRules(@RequestBody RuleRequirements ruleRequirements) {
-        System.out.println("ruleRequirements: " + ruleRequirements);
-        RuleRequirements ruleRequirements1 = recommendationRuleService.createRules(ruleRequirements);
-        return ResponseEntity.ok(ruleRequirements);
+    @DeleteMapping("/{id}")
+    public boolean deleteById(Long id) {
+        return recommendationRuleService.deleteById(id);
     }
 }

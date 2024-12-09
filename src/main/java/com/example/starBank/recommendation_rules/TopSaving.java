@@ -14,7 +14,7 @@ public class TopSaving implements RecommendationRuleSet{
     private final Recommendation recommendation;
 
     public TopSaving(RecommendationsRepository repository) {
-        recommendation = new Recommendation(2,"Top saving", "Откройте свою собственную «Копилку» с нашим банком! «Копилка» — " +
+        recommendation = new Recommendation(UUID.randomUUID(),"Top saving", "Откройте свою собственную «Копилку» с нашим банком! «Копилка» — " +
                 "это уникальный банковский инструмент, который поможет вам легко и удобно накапливать деньги на важные цели. " +
                 "Больше никаких забытых чеков и потерянных квитанций — всё под контролем!\n" +
                 "\n" + "Преимущества «Копилки»:\n" + "\n" + "Накопление средств на конкретные цели. Установите лимит и срок" +

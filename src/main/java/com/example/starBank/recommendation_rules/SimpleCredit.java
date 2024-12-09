@@ -13,7 +13,7 @@ public class SimpleCredit implements RecommendationRuleSet{
     private final Recommendation recommendation;
 
     public SimpleCredit(RecommendationsRepository repository) {
-        recommendation = new Recommendation(3,"Простой кредит", "Откройте мир выгодных кредитов с нами!\n" +
+        recommendation = new Recommendation(UUID.randomUUID(),"Простой кредит", "Откройте мир выгодных кредитов с нами!\n" +
                 "\n" +
                 "Ищете способ быстро и без лишних хлопот получить нужную сумму? Тогда наш выгодный кредит — именно то, что вам нужно! Мы предлагаем низкие процентные ставки, гибкие условия и индивидуальный подход к каждому клиенту.\n" +
                 "\n" +

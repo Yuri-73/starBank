@@ -11,24 +11,14 @@ import java.util.*;
 @Service
 public class RecommendationRuleService {
 
-    private RecommendationsRuleRepository recommendationsRuleRepository;
-    private RuleRequirementsRepository ruleRequirementsRepository;
-    private SimpleCreditRuleService simpleCreditRuleService;
+    private final RecommendationsRuleRepository recommendationsRuleRepository;
+    private final RuleRequirementsRepository ruleRequirementsRepository;
 
     public RecommendationRuleService(RecommendationsRuleRepository recommendationsRuleRepository,
-                                     RuleRequirementsRepository ruleRequirementsRepository,
-                                     SimpleCreditRuleService simpleCreditRuleService) {
+                                     RuleRequirementsRepository ruleRequirementsRepository) {
         this.recommendationsRuleRepository = recommendationsRuleRepository;
-        this.simpleCreditRuleService = simpleCreditRuleService;
         this.ruleRequirementsRepository = ruleRequirementsRepository;
     }
-
-    public RuleRequirements createRules(RuleRequirements ruleRequirements) {
-        System.out.println("ruleRequirements2: " + ruleRequirements);
-
-        return ruleRequirementsRepository.save(ruleRequirements);
-    }
-
 
 
     public RecommendationWithRules createRecommendationRules(RecommendationWithRules recommendationWithRules) {
@@ -48,18 +38,12 @@ public class RecommendationRuleService {
         return recommendationsRuleRepository.findAll();
     }
 
-    public List<RecommendationWithRules> getRecommendationRules(UUID id) {
-        List<RecommendationWithRules> recommendationWithRules = getAllRecommendationWithRules();
-        List<RecommendationWithRules> recommendationsByRules = new ArrayList<>();
-        for (RecommendationWithRules recom : recommendationWithRules) {
-            if (simpleCreditRuleService.recommendationSimpleCredit(id, recom)) {
-                recommendationsByRules.add(recom);
-            }
+    public boolean deleteById(Long id) {
+        if (recommendationsRuleRepository.existsById(id)) {
+            recommendationsRuleRepository.deleteById(id);
+            return true;
         }
-        if (recommendationsByRules.isEmpty()) {
-            recommendationsByRules.add(new RecommendationWithRules());
-        }
-        return recommendationsByRules;
+        return false;
     }
 
 

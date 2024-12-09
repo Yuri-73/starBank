@@ -1,5 +1,6 @@
 package com.example.starBank.controllers;
 
+import com.example.starBank.services.RecommendationRuleService;
 import com.example.starBank.services.RecommendationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,11 @@ import java.util.UUID;
 public class RecommendationController {
 
     private final RecommendationService service;
+    private final RecommendationRuleService ruleService;
 
-    public RecommendationController(RecommendationService service) {
+    public RecommendationController(RecommendationService service, RecommendationRuleService ruleService) {
         this.service = service;
+        this.ruleService = ruleService;
     }
     /**
      * Метод тестовой проверки функционирования БД JDBC
@@ -37,5 +40,10 @@ public class RecommendationController {
     @GetMapping("{id}")
     public ResponseEntity<String> getUser(@PathVariable UUID id) {
         return ResponseEntity.ok("user_id: " + id + ",\n" + "recommendations: " + service.getRecommendation(id).toString());
+    }
+
+    @GetMapping("/new/{id}")
+    public ResponseEntity<String> getRecommendationForUser(@PathVariable UUID id) {
+        return ResponseEntity.ok("user_id: " + id + ",\n" + "recommendations: " + service.getRecommendation(id, ruleService.getAllRecommendationWithRules()).toString());
     }
 }
