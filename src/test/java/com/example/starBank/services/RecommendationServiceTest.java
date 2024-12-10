@@ -1,6 +1,8 @@
 package com.example.starBank.services;
 
 import com.example.starBank.model.Recommendation;
+import com.example.starBank.model.RecommendationWithRules;
+import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.recommendation_rules.Invest500;
 import com.example.starBank.recommendation_rules.SimpleCredit;
 import com.example.starBank.recommendation_rules.TopSaving;
@@ -12,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -102,34 +105,70 @@ class RecommendationServiceTest {
         List<Recommendation> recommendations1 = out.getRecommendation(UUID.randomUUID());
         //check:
         assertEquals(recommendations1.size(), 1);
-        assertEquals(recommendations1.get(0).getId(), 0);
         assertEquals(recommendations1.get(0).getName(), "Рекомендуемых продуктов нет");
         assertEquals(recommendations1.get(0).getText(), "-");
     }
+
+    @Test
+    void getRecommendationDinamic_Result_Test() {
+        //input conditions
+        RecommendationWithRules recommendationWithRules = new RecommendationWithRules("name", "text", UUID.randomUUID());
+
+        RuleRequirements ruleRequirements = new RuleRequirements();
+        ruleRequirements.setId(1l);
+        ruleRequirements.setArguments("argument");
+        ruleRequirements.setNegate(true);
+        ruleRequirements.setQuery("USER_OF");
+
+        RuleRequirements ruleRequirements2 = new RuleRequirements();
+        ruleRequirements2.setId(2l);
+        ruleRequirements2.setArguments("argument2");
+        ruleRequirements2.setNegate(false);
+        ruleRequirements2.setQuery("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW");
+
+        recommendationWithRules.setRuleRequirements(List.of(ruleRequirements, ruleRequirements2));
+        List<RecommendationWithRules> recomList = List.of(recommendationWithRules);
+
+        Mockito.when(repository.getUserOfResult(any(), any())).thenReturn(false);
+        Mockito.when(repository.getTransactionSumCompareDepositWithDrawResult(any(), any())).thenReturn(true);
+
+        //test:
+        List<Recommendation> recommendationsByRule = out.getRecommendation(UUID.randomUUID(), recomList);
+
+        //check:
+        assertEquals(recommendationsByRule.size(), 1);
+        assertEquals(recommendationsByRule.get(0).getName(), "name");
+        assertEquals(recommendationsByRule.get(0).getText(), "text");
+    }
+
+    @Test
+    void getRecommendationDinamic_EmptyList_Test() {
+        //input conditions
+        RecommendationWithRules recommendationWithRules = new RecommendationWithRules("name", "text", UUID.randomUUID());
+
+        RuleRequirements ruleRequirements = new RuleRequirements();
+        ruleRequirements.setId(1l);
+        ruleRequirements.setArguments("argument");
+        ruleRequirements.setNegate(false);
+        ruleRequirements.setQuery("USER_OF");
+
+        RuleRequirements ruleRequirements2 = new RuleRequirements();
+        ruleRequirements2.setId(2l);
+        ruleRequirements2.setArguments("argument2");
+        ruleRequirements2.setNegate(true);
+        ruleRequirements2.setQuery("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW");
+        System.out.println("ruleRequirements2 " +ruleRequirements2);
+
+        recommendationWithRules.setRuleRequirements(List.of(ruleRequirements, ruleRequirements2));
+        List<RecommendationWithRules> recomList = List.of(recommendationWithRules);
+
+        //test:
+        List<Recommendation> recommendationsByRule = out.getRecommendation(UUID.randomUUID(), recomList);
+
+        //check:
+        assertEquals(recommendationsByRule.size(), 1);
+        assertEquals(recommendationsByRule.get(0).getName(), "Рекомендуемых продуктов нет");
+        assertEquals(recommendationsByRule.get(0).getText(), "-");
+    }
 }
 
-
-//    List<Student> students = List.of(student1, student2, student3, student4);
-//        Mockito.when(studentRepositoryMock.findByAgeBetween(anyInt(), anyInt())).thenReturn(students);
-//                //check:
-//                assertEquals(out.findByAgeBetween(2, 5), students);
-
-//    public List<Recommendation> getRecommendation(UUID id) {
-//        List<Recommendation> listOfRecommendation = new ArrayList<>();
-//        Recommendation recommendation1 = product1.getRecommendationByRule(id).orElse(null);
-//        Recommendation recommendation2 = product2.getRecommendationByRule(id).orElse(null);
-//        Recommendation recommendation3 = product3.getRecommendationByRule(id).orElse(null);
-//        if (recommendation1 != null) {
-//            listOfRecommendation.add(recommendation1);
-//        }
-//        if (recommendation2 != null) {
-//            listOfRecommendation.add(recommendation2);
-//        }
-//        if (recommendation3 != null) {
-//            listOfRecommendation.add(recommendation3);
-//        }
-//        if (listOfRecommendation.size() == 0) {
-//            listOfRecommendation.add(new Recommendation("Рекомендуемых продуктов нет", "-"));
-//        }
-//        return listOfRecommendation;
-//    }

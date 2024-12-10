@@ -92,7 +92,7 @@ public class RecommendationService {
                 tmp = ruleSwitch(id, rule);
             }
             if (!tmp) {
-                tmp = false;
+                return tmp;
             }
         }
         return tmp;
@@ -104,7 +104,6 @@ public class RecommendationService {
     В случае отсутствия нужного case будет возвращено значение false
     */
     private Boolean ruleSwitch(UUID id, RuleRequirements rule) {
-        System.out.println("RuleRequirements rule - " +rule);
         switch (rule.getQuery()) {
             case "USER_OF" -> {
                 return recommendationsRepository.getUserOfResult(id, rule);

@@ -36,7 +36,7 @@ public class RecommendationRuleService {
         return recommendationWithRules;
     }
 
-    @Cacheable("RecommendationWithRules")
+//    @Cacheable("RecommendationWithRules")
     public List<RecommendationWithRules> getAllRecommendationWithRules() {
         return recommendationsRuleRepository.findAll();
     }
