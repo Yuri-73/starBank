@@ -91,6 +91,9 @@ public class RecommendationService {
             } else {
                 tmp = ruleSwitch(id, rule);
             }
+            if (!tmp) {
+                tmp = false;
+            }
         }
         return tmp;
     }
@@ -109,11 +112,11 @@ public class RecommendationService {
             case "ACTIVE_USER_OF" -> {
                 return recommendationsRepository.getActiveUserOfResult(id, rule);
             }
-            case "TRANSACTION_SUM_COMPARE" -> {
-                return recommendationsRepository.getTransactionSumCompareResult(id, rule);
-            }
             case "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW" -> {
                 return recommendationsRepository.getTransactionSumCompareDepositWithDrawResult(id, rule);
+            }
+            case "TRANSACTION_SUM_COMPARE" -> {
+                return recommendationsRepository.getTransactionSumCompareResult(id, rule);
             }
             default ->
             {

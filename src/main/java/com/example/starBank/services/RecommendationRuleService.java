@@ -4,6 +4,8 @@ import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.repositories.RecommendationsRuleRepository;
 import com.example.starBank.repositories.RuleRequirementsRepository;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,7 +22,6 @@ public class RecommendationRuleService {
         this.ruleRequirementsRepository = ruleRequirementsRepository;
     }
 
-
     public RecommendationWithRules createRecommendationRules(RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules: " + recommendationWithRules);
         recommendationWithRules.getRuleRequirements().stream()
@@ -28,12 +29,14 @@ public class RecommendationRuleService {
         return recommendationsRuleRepository.save(recommendationWithRules);
     }
 
+
     public RecommendationWithRules findRecommendationWithRules(Long id) {
         RecommendationWithRules recommendationWithRules = recommendationsRuleRepository.findById(id).orElse(null);
         System.out.println("recommendationWithRules-5: " + recommendationWithRules.getRuleRequirements());
         return recommendationWithRules;
     }
 
+    @Cacheable("RecommendationWithRules")
     public List<RecommendationWithRules> getAllRecommendationWithRules() {
         return recommendationsRuleRepository.findAll();
     }

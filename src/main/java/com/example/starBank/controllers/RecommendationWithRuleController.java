@@ -3,6 +3,7 @@ package com.example.starBank.controllers;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.services.RecommendationRuleService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -29,24 +30,15 @@ public class RecommendationWithRuleController {
         return ResponseEntity.ok(recommendationWithRules1);
     }
 
-//    @GetMapping("/get/{id}")
-//    public ResponseEntity<RecommendationWithRules> findRecommendationById(@PathVariable Long id) {
-//        if (recommendationRuleService.findRecommendationWithRules(id) == null) {
-//            /**
-//             * Вывод 404
-//             */
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return ResponseEntity.ok(recommendationRuleService.findRecommendationWithRules(id));
-//    }
-
-    @GetMapping() // GET http://localhost:8090/student
+    @GetMapping()
     public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteById(Long id) {
-        return recommendationRuleService.deleteById(id);
+    public ResponseEntity<RecommendationWithRules> deleteById(Long id) {
+        if (!recommendationRuleService.deleteById(id))
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(204).build();
     }
 }
