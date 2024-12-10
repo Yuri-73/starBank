@@ -126,15 +126,15 @@ public class RecommendationsRepository {
     }
 
     public Boolean getTransactionSumCompareResult(UUID id, RuleRequirements rule) {
-        String[] arguments = rule.getArguments().split(",");
+        String[] arguments = rule.getArguments().split(", ");
+        System.out.println("arguments " +arguments[0] +arguments[1]+arguments[2]+arguments[3]);
         return jdbcTemplate.queryForObject(
-                "SELECT SUM(t.amount)" +arguments[2] + "? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? AND t.type = ?",
+                "SELECT SUM(t.AMOUNT)" +arguments[2]+ "? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id=? AND p.type=? AND t.type=?",
                 Boolean.class, arguments[3], id, arguments[0], arguments[1]);
-
     }
 
     public Boolean getTransactionSumCompareDepositWithDrawResult(UUID id, RuleRequirements rule) {
-        String[] arguments = rule.getArguments().split(",");
+        String[] arguments = rule.getArguments().split(", ");
         return jdbcTemplate.queryForObject(
                 "SELECT (SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id WHERE" +
                         " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT')" + arguments[1] +
@@ -142,6 +142,7 @@ public class RecommendationsRepository {
                         "WHERE t.user_id = ? AND p.type = ? AND t.TYPE = 'WITHDRAW');",
                 Boolean.class,
                 id, arguments[0], id, arguments[0]);
-
     }
 }
+
+
