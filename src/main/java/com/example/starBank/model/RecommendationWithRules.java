@@ -2,7 +2,9 @@ package com.example.starBank.model;
 
 import jakarta.persistence.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "recommendation_with_rules")
@@ -32,6 +34,14 @@ public class RecommendationWithRules {
     }
 
     public RecommendationWithRules() {
+    }
+
+    public RecommendationWithRules(Long id, String name, String text, UUID productId, List<RuleRequirements> ruleRequirements) {
+        this.id = id;
+        this.name = name;
+        this.productId = productId;
+        this.text = text;
+        this.ruleRequirements = ruleRequirements;
     }
 
     public Long getId() {
@@ -66,6 +76,7 @@ public class RecommendationWithRules {
         return text;
     }
 
+
     public List<RuleRequirements> getRuleRequirements() {
         return ruleRequirements;
     }
@@ -74,17 +85,18 @@ public class RecommendationWithRules {
         this.ruleRequirements = ruleRequirements;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RecommendationWithRules that = (RecommendationWithRules) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(productId, that.productId) && Objects.equals(text, that.text);
+        return Objects.equals(name, that.name) && Objects.equals(productId, that.productId) && Objects.equals(text, that.text);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, productId, text);
+        return Objects.hash(name, productId, text);
     }
 
     @Override

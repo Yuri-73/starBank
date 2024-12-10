@@ -92,7 +92,7 @@ public class RecommendationService {
                 tmp = ruleSwitch(id, rule);
             }
             if (!tmp) {
-                tmp = false;
+                return false;
             }
         }
         return tmp;
