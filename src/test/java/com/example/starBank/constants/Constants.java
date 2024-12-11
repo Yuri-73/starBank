@@ -1,19 +1,23 @@
 package com.example.starBank.constants;
 
 import com.example.starBank.model.Recommendation;
+import com.example.starBank.model.RecommendationWithRules;
+import com.example.starBank.model.RuleRequirements;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Constants {
 
-    public static final Recommendation INVEST500 = new Recommendation(UUID.randomUUID(), "Invest 500", "Откройте свой путь к успеху с индивидуальным" +
+    public static final Recommendation INVEST500 = new Recommendation(UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a") , "Invest 500", "Откройте свой путь к успеху с индивидуальным" +
             " инвестиционным счетом (ИИС) от нашего банка! Воспользуйтесь налоговыми льготами и начните" +
             " инвестировать с умом. Пополните счет до конца года и получите выгоду в виде вычета на взнос " +
             "в следующем налоговом периоде. Не упустите возможность разнообразить свой портфель, снизить риски" +
             " и следить за актуальными рыночными тенденциями. Откройте ИИС сегодня и станьте ближе к финансовой" +
             " независимости!");
 
-    public static final Recommendation SIMPLECREDIT = new Recommendation(UUID.randomUUID(), "Простой кредит", "Откройте мир выгодных кредитов с нами!\n" +
+    public static final Recommendation SIMPLECREDIT = new Recommendation(UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"), "Простой кредит", "Откройте мир выгодных кредитов с нами!\n" +
             "\n" +
             "Ищете способ быстро и без лишних хлопот получить нужную сумму? Тогда наш выгодный кредит — именно то, что вам нужно! Мы предлагаем низкие процентные ставки, гибкие условия и индивидуальный подход к каждому клиенту.\n" +
             "\n" +
@@ -27,7 +31,7 @@ public class Constants {
             "\n" +
             "Не упустите возможность воспользоваться выгодными условиями кредитования от нашей компании!");
 
-    public static final Recommendation TOPSAVING = new Recommendation(UUID.randomUUID(), "Top saving", "Откройте свою собственную «Копилку» с нашим банком! «Копилка» — " +
+    public static final Recommendation TOPSAVING = new Recommendation(UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"), "Top saving", "Откройте свою собственную «Копилку» с нашим банком! «Копилка» — " +
             "это уникальный банковский инструмент, который поможет вам легко и удобно накапливать деньги на важные цели. " +
             "Больше никаких забытых чеков и потерянных квитанций — всё под контролем!\n" +
             "\n" + "Преимущества «Копилки»:\n" + "\n" + "Накопление средств на конкретные цели. Установите лимит и срок" +
@@ -36,4 +40,10 @@ public class Constants {
             " необходимости.\n" + "\n" + "Безопасность и надежность. Ваши средства находятся под защитой банка, а доступ к ним" +
             " возможен только через мобильное приложение или интернет-банкинг.\n" + "\n" +
             "Начните использовать «Копилку» уже сегодня и станьте ближе к своим финансовым целям!");
+
+
+
+
+
+
 }

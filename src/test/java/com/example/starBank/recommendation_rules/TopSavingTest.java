@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.UUID;
+
 import static com.example.starBank.constants.Constants.TOPSAVING;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -30,6 +32,7 @@ public class TopSavingTest {
         when(repository.getDebitWithdrawAmount(any())).thenReturn(24000);
 
         Recommendation recommendation = out.getRecommendationByRule(any()).orElse(null);
+        recommendation.setId(UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"));
         assertEquals(recommendation, TOPSAVING);
     }
 

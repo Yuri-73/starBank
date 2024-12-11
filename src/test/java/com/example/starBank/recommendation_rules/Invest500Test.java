@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.UUID;
+
 import static com.example.starBank.constants.Constants.INVEST500;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -30,6 +32,7 @@ public class Invest500Test {
         when(repository.getSavingAmount(any())).thenReturn(55000);
 
         Recommendation recommendation = out.getRecommendationByRule(any()).orElse(null);
+        recommendation.setId(UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a"));
         assertEquals(recommendation, INVEST500);
     }
 

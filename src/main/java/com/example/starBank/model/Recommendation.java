@@ -14,8 +14,8 @@ public class Recommendation {
     private UUID id;
 
     /**
-    * Текст рекомендации
-    */
+     * Текст рекомендации
+     */
     private String text;
 
     public Recommendation(UUID id, String name, String text) {
@@ -37,6 +37,18 @@ public class Recommendation {
 
     public String getText() {
         return text;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
