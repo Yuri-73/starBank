@@ -24,7 +24,7 @@ public class RecommendationWithRules {
     @Column(name = "text")
     private String text;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<RuleRequirements> ruleRequirements;
 
     public RecommendationWithRules(String name, String text, UUID productId) {

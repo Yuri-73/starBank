@@ -135,6 +135,7 @@ public class RecommendationsRepository {
 
     public Boolean getTransactionSumCompareDepositWithDrawResult(UUID id, RuleRequirements rule) {
         String[] arguments = rule.getArguments().split(", ");
+
         return jdbcTemplate.queryForObject(
                 "SELECT (SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id WHERE" +
                         " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT')" + arguments[1] +
@@ -142,6 +143,11 @@ public class RecommendationsRepository {
                         "WHERE t.user_id = ? AND p.type = ? AND t.TYPE = 'WITHDRAW');",
                 Boolean.class,
                 id, arguments[0], id, arguments[0]);
+    }
+
+    public UUID getUserIdByUsername(String username) {
+        return jdbcTemplate.queryForObject("SELECT users.id FROM users " +
+                "WHERE users.username = ?", UUID.class, username);
     }
 }
 
