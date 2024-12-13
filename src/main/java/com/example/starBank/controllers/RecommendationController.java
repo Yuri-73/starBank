@@ -42,6 +42,11 @@ public class RecommendationController {
         return ResponseEntity.ok("user_id: " + id + ",\n" + "recommendations: " + service.getRecommendation(id).toString());
     }
 
+    /**
+     * Метод формирования динамических рекомендаций клиенту по пользованию продуктами банка
+     * @param id для поиска по id клиента банка
+     * @return Возвращает клиенту список рекомендаций или пустой список
+     */
     @GetMapping("/new/{id}")
     public ResponseEntity<String> getRecommendationForUser(@PathVariable UUID id) {
         return ResponseEntity.ok("user_id: " + id + ",\n" + "recommendations: " + service.getRecommendation(id, ruleService.getAllRecommendationWithRules()).toString());

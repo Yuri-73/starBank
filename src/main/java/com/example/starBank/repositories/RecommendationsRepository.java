@@ -172,6 +172,11 @@ public class RecommendationsRepository {
         return ansver == null ? false : ansver;
     }
 
+    /**
+     * Метод получения Id клиента по его имени в базе USERS
+     * @param username для поиска id клиента
+     * @return Возвращает id клиента
+     */
     public UUID getUserIdByUsername(String username) {
         return jdbcTemplate.queryForObject("SELECT users.id FROM users " +
                 "WHERE users.username = ?", UUID.class, username);

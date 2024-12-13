@@ -50,8 +50,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     /**
      * Метод формирования приветственного сообщения по стартовой команде «/start»)
      */
-    private void startMessageReceived(Long chatId, String userName) {
-        String responseMessage = "Здравствуйте, " + userName + " Банк Стар подберёт новые продукты для вас!";
+    private void startMessageReceived(Long chatId, String firstName, String lastName) {
+        String responseMessage = "Здравствуйте, " + firstName + " " + lastName + "! Банк Стар подберёт для Вас новые продукты!";
         sendMessage(chatId, responseMessage);  //Вызов внутреннего метода для передачи в итоге текущей задачи пользователю
     }
 
@@ -73,17 +73,17 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             System.out.println("messageReceived - " + messageReceived);
             logger.info("Обработка текущей задачи: {}", messageReceived);
 
-            if (update.message().chat() == null || update.message().text().isBlank()) {
+            if (update.message().chat() == null || messageReceived.isBlank()) {
                 logger.warn("Невалидное сообщение от: {}", messageReceived);
             }
             long chatId = update.message().chat().id(); //Выделение из абдейта идентификатора чата, по которому следует отправить сообщение боту
 
             if ((START).equals(messageReceived)) {  //Если текст команды соответствует "/start", то выводится соответствующее приветствие пользователю.
                 logger.info("Стартовая команда для бота {}", chatId);
-                startMessageReceived(chatId, update.message().chat().firstName()); //Вызов метода формирования приветственного сообщения с именем зарегистрированного пользователя
+                startMessageReceived(chatId, update.message().chat().firstName(), update.message().chat().lastName()); //Вызов метода формирования приветственного сообщения с именем зарегистрированного пользователя
                 return;
             }
-            if (messageReceived.startsWith("/recommend")) {
+            if (messageReceived.startsWith("/recommend") && !messageReceived.equals("/recommend")) {
                 logger.info("Команда уведомления для бота {}", chatId);
 
                 String[] parts = update.message().text().split(" ");
@@ -99,7 +99,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                 List<RecommendationWithRules> listAll = recommendationsRuleRepository.findAll();
                 List<Recommendation> list = recommendationService.getRecommendation(id, listAll);
 
-                sendMessage(chatId, "Рекомендации для клиента банка ID = " + id + ":\n" + list.toString());
+                sendMessage(chatId, "Новые продукты для клиента банка ID = " + id + ":\n" + list.toString());
             } else {
                 logger.info("Формат для {} невалидный", chatId);
                 sendMessage(chatId, "Неверный формат для сообщения");
