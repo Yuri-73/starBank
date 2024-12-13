@@ -2,6 +2,7 @@ package com.example.starBank.services;
 
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.repositories.RecommendationsRuleRepository;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class RecommendationRuleService {
         return recommendationsRuleRepository.save(recommendationWithRules);
     }
 
-//    @Cacheable("RecommendationWithRules")
+    @Cacheable("Recommendations")
     public List<RecommendationWithRules> getAllRecommendationWithRules() {
         return recommendationsRuleRepository.findAll();
     }
