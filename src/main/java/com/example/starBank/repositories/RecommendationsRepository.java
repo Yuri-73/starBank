@@ -113,36 +113,63 @@ public class RecommendationsRepository {
                 Integer.class, id, debit, credit);
     }
 
+    /**
+     * Метод определения минимум одной транзакции клиента по выбранному типу продукта банка
+     * @param id для поиска по id клиента банка
+     * @param rule - правило для выделения аргумента
+     * @return Возвращает булевое значение
+     */
     public Boolean getUserOfResult(UUID id, RuleRequirements rule) {
-        return jdbcTemplate.queryForObject(
+        Boolean ansver = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) >=1  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
                 Boolean.class, id, rule.getArguments());
+        return ansver == null ? false : ansver;
     }
 
+    /**
+     * Метод определения минимум пяти транзакций клиента по выбранному типу продукта банка
+     * @param id для поиска по id клиента банка
+     * @param rule - правило для выделения аргумента
+     * @return Возвращает булевое значение
+     */
     public Boolean getActiveUserOfResult(UUID id, RuleRequirements rule) {
-        return jdbcTemplate.queryForObject(
+        Boolean ansver = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) >=5  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
                 Boolean.class, id, rule.getArguments());
+        return ansver == null ? false : ansver;
     }
 
+    /**
+     * Метод сравнивает сумму всех транзакций типа Y по продуктам типа X с некоторой константой C.
+     * @param id для поиска по id клиента банка
+     * @param rule - правило для выделения аргумента
+     * @return Возвращает булевое значение
+     */
     public Boolean getTransactionSumCompareResult(UUID id, RuleRequirements rule) {
         String[] arguments = rule.getArguments().split(", ");
         System.out.println("arguments " +arguments[0] +arguments[1]+arguments[2]+arguments[3]);
-        return jdbcTemplate.queryForObject(
+        Boolean ansver =  jdbcTemplate.queryForObject(
                 "SELECT SUM(t.AMOUNT)" +arguments[2]+ "? FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id=? AND p.type=? AND t.type=?",
                 Boolean.class, arguments[3], id, arguments[0], arguments[1]);
+        return ansver == null ? false : ansver;
     }
 
+    /**
+     * Метод сравнивает сравнивает сумму всех транзакций типа DEPOSIT с суммой всех транзакций типа WITHDRAW по продукту X
+     * @param id для поиска по id клиента банка
+     * @param rule - правило для выделения аргумента
+     * @return Возвращает булевое значение
+     */
     public Boolean getTransactionSumCompareDepositWithDrawResult(UUID id, RuleRequirements rule) {
         String[] arguments = rule.getArguments().split(", ");
 
-        return jdbcTemplate.queryForObject(
+        Boolean ansver = jdbcTemplate.queryForObject(
                 "SELECT (SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id WHERE" +
                         " t.user_id = ? AND p.type = ? AND t.TYPE = 'DEPOSIT')" + arguments[1] +
                         "(SELECT SUM(t.AMOUNT) FROM TRANSACTIONS t INNER JOIN PRODUCTS p ON t.product_id = p.id " +
                         "WHERE t.user_id = ? AND p.type = ? AND t.TYPE = 'WITHDRAW');",
-                Boolean.class,
-                id, arguments[0], id, arguments[0]);
+                Boolean.class, id, arguments[0], id, arguments[0]);
+        return ansver == null ? false : ansver;
     }
 
     public UUID getUserIdByUsername(String username) {
