@@ -1,20 +1,17 @@
 package com.example.starBank.services;
 
 import com.example.starBank.model.RecommendationCounter;
-import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.repositories.RecommendationCounterRepository;
-import com.example.starBank.repositories.RecommendationCounterRepositoryJPA;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RecommendationCounterService {
-    private final RecommendationCounterRepositoryJPA counterRepositoryJPA;
-    private final RecommendationCounterRepository counterRepository;
+    private final RecommendationCounterRepository counterRepositoryJPA;
 
-    public RecommendationCounterService(RecommendationCounterRepository counterRepository, RecommendationCounterRepositoryJPA counterRepositoryJPA) {
-        this.counterRepository = counterRepository;
+
+    public RecommendationCounterService(RecommendationCounterRepository counterRepositoryJPA) {
         this.counterRepositoryJPA = counterRepositoryJPA;
     }
 

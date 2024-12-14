@@ -2,7 +2,6 @@ package com.example.starBank.services;
 
 import com.example.starBank.exceptions.InvalidAmountOfArgumentsException;
 import com.example.starBank.model.Recommendation;
-import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.recommendation_rules.Invest500;
@@ -35,8 +34,10 @@ public class RecommendationService {
         this.counterRepository = counterRepository;
 
     }
+
     /**
      * Метод получения значения amount из БД через репозиторий
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает 4-значное число amount или 0
      */
@@ -46,6 +47,7 @@ public class RecommendationService {
 
     /**
      * Метод формирования списка рекомендаций
+     *
      * @param id для поиска по id клиента банка
      * @return Возвращает коллекцию рекомендаций
      */
@@ -64,7 +66,7 @@ public class RecommendationService {
             listOfRecommendation.add(recommendation3);
         }
         if (listOfRecommendation.size() == 0) {
-            listOfRecommendation.add(new Recommendation(null,"Рекомендуемых продуктов нет", "-"));
+            listOfRecommendation.add(new Recommendation(null, "Рекомендуемых продуктов нет", "-"));
         }
         return listOfRecommendation;
     }
@@ -77,11 +79,11 @@ public class RecommendationService {
         for (RecommendationWithRules r : recommendationsWithRules) {
             if (recommendationAppliance(id, r.getRuleRequirements())) {
                 listOfRecommendation.add(new Recommendation(r.getProductId(), r.getName(), r.getText()));
-                r.setRecommendationCounter(counterRepository.incrementCounter(r.getId()));
+                r.setRecommendationCounter(counterRepository.findByRecommendationWithRulesIdAndIncrementCounter(r.getId()));
             }
         }
         if (listOfRecommendation.isEmpty()) {
-            listOfRecommendation.add(new Recommendation(null,"Рекомендуемых продуктов нет", "-"));
+            listOfRecommendation.add(new Recommendation(null, "Рекомендуемых продуктов нет", "-"));
         }
         return listOfRecommendation;
     }
@@ -113,7 +115,7 @@ public class RecommendationService {
     В случае отсутствия нужного case будет возвращено значение false
     */
     private Boolean ruleSwitch(UUID id, RuleRequirements rule) {
-        System.out.println("RuleRequirements rule - " +rule);
+        System.out.println("RuleRequirements rule - " + rule);
         switch (rule.getQuery()) {
             case "USER_OF" -> {
                 if (rule.getArguments().split(",").length != 1) {
@@ -139,8 +141,7 @@ public class RecommendationService {
                 }
                 return recommendationsRepository.getTransactionSumCompareResult(id, rule);
             }
-            default ->
-            {
+            default -> {
                 return false;
             }
         }
