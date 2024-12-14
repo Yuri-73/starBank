@@ -1,5 +1,6 @@
 package com.example.starBank.services;
 
+import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.repositories.RecommendationsRuleRepository;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,10 +21,11 @@ public class RecommendationRuleService {
         System.out.println("recommendationWithRules: " + recommendationWithRules);
         recommendationWithRules.getRuleRequirements().stream()
                 .forEach(ruleRequirements -> ruleRequirements.setRecommendationWithRules(recommendationWithRules));
+        recommendationWithRules.setRecommendationCounter(new RecommendationCounter(recommendationWithRules));
         return recommendationsRuleRepository.save(recommendationWithRules);
     }
 
-    @Cacheable("RecommendationWithRules")
+    //@Cacheable("RecommendationWithRules")
     public List<RecommendationWithRules> getAllRecommendationWithRules() {
         return recommendationsRuleRepository.findAll();
     }

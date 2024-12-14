@@ -6,6 +6,7 @@ import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.recommendation_rules.Invest500;
 import com.example.starBank.recommendation_rules.SimpleCredit;
 import com.example.starBank.recommendation_rules.TopSaving;
+import com.example.starBank.repositories.RecommendationCounterRepository;
 import com.example.starBank.repositories.RecommendationsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,11 +35,14 @@ class RecommendationServiceTest {
     @Mock
     private RecommendationsRepository repository;
 
+    @Mock
+    private RecommendationCounterRepository counterRepository;
+
     private RecommendationService out;
 
     @BeforeEach
     public void setUp() {
-        out = new RecommendationService(repository, product1, product2, product3);
+        out = new RecommendationService(repository, product1, product2, product3,counterRepository);
     }
 
     @Test

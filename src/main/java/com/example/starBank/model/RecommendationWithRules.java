@@ -1,5 +1,6 @@
 package com.example.starBank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -27,6 +28,9 @@ public class RecommendationWithRules {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
     private List<RuleRequirements> ruleRequirements;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
+    private RecommendationCounter recommendationCounter;
+
     public RecommendationWithRules(String name, String text, UUID productId) {
         this.name = name;
         this.productId = productId;
@@ -36,12 +40,13 @@ public class RecommendationWithRules {
     public RecommendationWithRules() {
     }
 
-    public RecommendationWithRules(Long id, String name, String text, UUID productId, List<RuleRequirements> ruleRequirements) {
+    public RecommendationWithRules(Long id, String name, String text, UUID productId, List<RuleRequirements> ruleRequirements, RecommendationCounter recommendationCounter) {
         this.id = id;
         this.name = name;
         this.productId = productId;
         this.text = text;
         this.ruleRequirements = ruleRequirements;
+        this.recommendationCounter = recommendationCounter;
     }
 
     public Long getId() {
@@ -76,6 +81,13 @@ public class RecommendationWithRules {
         return text;
     }
 
+    public RecommendationCounter getRecommendationCounter() {
+        return recommendationCounter;
+    }
+
+    public void setRecommendationCounter(RecommendationCounter recommendationCounter) {
+        this.recommendationCounter = recommendationCounter;
+    }
 
     public List<RuleRequirements> getRuleRequirements() {
         return ruleRequirements;

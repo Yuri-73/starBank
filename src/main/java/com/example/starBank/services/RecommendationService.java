@@ -1,12 +1,15 @@
 package com.example.starBank.services;
 
+import com.example.starBank.exceptions.InvalidAmountOfArgumentsException;
 import com.example.starBank.model.Recommendation;
+import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.recommendation_rules.Invest500;
 import com.example.starBank.recommendation_rules.RecommendationRuleSet;
 import com.example.starBank.recommendation_rules.SimpleCredit;
 import com.example.starBank.recommendation_rules.TopSaving;
+import com.example.starBank.repositories.RecommendationCounterRepository;
 import com.example.starBank.repositories.RecommendationsRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +24,16 @@ public class RecommendationService {
     private final RecommendationRuleSet product2;
     private final RecommendationRuleSet product3;
 
-    public RecommendationService(RecommendationsRepository recommendationsRepository, Invest500 product1, TopSaving product2, SimpleCredit product3) {
+    private final RecommendationCounterRepository counterRepository;
+
+
+    public RecommendationService(RecommendationsRepository recommendationsRepository, Invest500 product1, TopSaving product2, SimpleCredit product3, RecommendationCounterRepository counterRepository) {
         this.recommendationsRepository = recommendationsRepository;
         this.product1 = product1;
         this.product2 = product2;
         this.product3 = product3;
+        this.counterRepository = counterRepository;
+
     }
     /**
      * Метод получения значения amount из БД через репозиторий
@@ -69,6 +77,7 @@ public class RecommendationService {
         for (RecommendationWithRules r : recommendationsWithRules) {
             if (recommendationAppliance(id, r.getRuleRequirements())) {
                 listOfRecommendation.add(new Recommendation(r.getProductId(), r.getName(), r.getText()));
+                r.setRecommendationCounter(counterRepository.incrementCounter(r.getId()));
             }
         }
         if (listOfRecommendation.isEmpty()) {
@@ -107,15 +116,27 @@ public class RecommendationService {
         System.out.println("RuleRequirements rule - " +rule);
         switch (rule.getQuery()) {
             case "USER_OF" -> {
+                if (rule.getArguments().split(",").length != 1) {
+                    throw new InvalidAmountOfArgumentsException(rule);
+                }
                 return recommendationsRepository.getUserOfResult(id, rule);
             }
             case "ACTIVE_USER_OF" -> {
+                if (rule.getArguments().split(",").length != 1) {
+                    throw new InvalidAmountOfArgumentsException(rule);
+                }
                 return recommendationsRepository.getActiveUserOfResult(id, rule);
             }
             case "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW" -> {
+                if (rule.getArguments().split(",").length != 2) {
+                    throw new InvalidAmountOfArgumentsException(rule);
+                }
                 return recommendationsRepository.getTransactionSumCompareDepositWithDrawResult(id, rule);
             }
             case "TRANSACTION_SUM_COMPARE" -> {
+                if (rule.getArguments().split(",").length != 4) {
+                    throw new InvalidAmountOfArgumentsException(rule);
+                }
                 return recommendationsRepository.getTransactionSumCompareResult(id, rule);
             }
             default ->
@@ -124,4 +145,5 @@ public class RecommendationService {
             }
         }
     }
+
 }
