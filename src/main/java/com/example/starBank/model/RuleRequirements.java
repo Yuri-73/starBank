@@ -21,7 +21,7 @@ public class RuleRequirements {
     @Column(name = "negate")
     boolean negate;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private RecommendationWithRules recommendationWithRules;
 

@@ -25,7 +25,7 @@ public class RecommendationWithRules {
     @Column(name = "text")
     private String text;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
     private List<RuleRequirements> ruleRequirements;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)

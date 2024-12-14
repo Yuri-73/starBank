@@ -1,5 +1,6 @@
 package com.example.starBank.controllers;
 
+import com.example.starBank.model.CounterForShow;
 import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.services.RecommendationCounterService;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class RecommendationCounterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RecommendationCounter>> getCounters() {
+    public ResponseEntity<List<CounterForShow>> getCounters() {
         return ResponseEntity.ok(counterService.getCounterList());
     }
 }

@@ -79,7 +79,7 @@ public class RecommendationService {
         for (RecommendationWithRules r : recommendationsWithRules) {
             if (recommendationAppliance(id, r.getRuleRequirements())) {
                 listOfRecommendation.add(new Recommendation(r.getProductId(), r.getName(), r.getText()));
-                r.setRecommendationCounter(counterRepository.findByRecommendationWithRulesIdAndIncrementCounter(r.getId()));
+                counterRepository.findByRecommendationWithRulesIdAndIncrementCounter(r.getId());
             }
         }
         if (listOfRecommendation.isEmpty()) {
