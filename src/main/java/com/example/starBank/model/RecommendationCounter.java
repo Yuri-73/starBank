@@ -12,6 +12,7 @@ public class RecommendationCounter {
     private Long id;
 
     @OneToOne
+    @JsonIgnore
     private RecommendationWithRules recommendationWithRules;
 
     @Column(name = "counter")
