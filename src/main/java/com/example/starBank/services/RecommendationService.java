@@ -47,11 +47,6 @@ public class RecommendationService {
     @Autowired
     RecommendationsRuleRepository recommendationsRuleRepository;
     public int get(UUID id) {
-//        UUID i = recommendationsRepository.getUserIdByUsername("cathrine.connelly");
-//        System.out.println("i = " +i);
-//        List<RecommendationWithRules> l = recommendationsRuleRepository.findAll();
-//        List<Recommendation> list = getRecommendation(id, l);
-//        System.out.println("list - " + list.toString());
         return recommendationsRepository.getRandomTransactionAmount(id);
     }
 
@@ -85,7 +80,7 @@ public class RecommendationService {
     /*Публичный метод для создания листа рекомендаций (пока пустого), прохода по листу
         объектов класса RecommendationWithRules и вызова приватного метода recommendationAppliance
         */
-    @Cacheable("RecommendationWithRules")
+//    @Cacheable("RecommendationWithRules")
     public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
         List<Recommendation> listOfRecommendation = new ArrayList<>();
         for (RecommendationWithRules r : recommendationsWithRules) {
