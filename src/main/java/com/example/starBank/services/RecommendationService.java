@@ -10,6 +10,9 @@ import com.example.starBank.recommendation_rules.SimpleCredit;
 import com.example.starBank.recommendation_rules.TopSaving;
 import com.example.starBank.repositories.RecommendationCounterRepository;
 import com.example.starBank.repositories.RecommendationsRepository;
+import com.example.starBank.repositories.RecommendationsRuleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,7 +44,14 @@ public class RecommendationService {
      * @param id для поиска по id клиента банка
      * @return Возвращает 4-значное число amount или 0
      */
+    @Autowired
+    RecommendationsRuleRepository recommendationsRuleRepository;
     public int get(UUID id) {
+//        UUID i = recommendationsRepository.getUserIdByUsername("cathrine.connelly");
+//        System.out.println("i = " +i);
+//        List<RecommendationWithRules> l = recommendationsRuleRepository.findAll();
+//        List<Recommendation> list = getRecommendation(id, l);
+//        System.out.println("list - " + list.toString());
         return recommendationsRepository.getRandomTransactionAmount(id);
     }
 
@@ -51,6 +61,7 @@ public class RecommendationService {
      * @param id для поиска по id клиента банка
      * @return Возвращает коллекцию рекомендаций
      */
+
     public List<Recommendation> getRecommendation(UUID id) {
         List<Recommendation> listOfRecommendation = new ArrayList<>();
         Recommendation recommendation1 = product1.getRecommendationByRule(id).orElse(null);
@@ -74,6 +85,7 @@ public class RecommendationService {
     /*Публичный метод для создания листа рекомендаций (пока пустого), прохода по листу
         объектов класса RecommendationWithRules и вызова приватного метода recommendationAppliance
         */
+    @Cacheable("RecommendationWithRules")
     public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
         List<Recommendation> listOfRecommendation = new ArrayList<>();
         for (RecommendationWithRules r : recommendationsWithRules) {

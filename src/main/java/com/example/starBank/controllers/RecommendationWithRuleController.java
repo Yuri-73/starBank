@@ -3,6 +3,7 @@ package com.example.starBank.controllers;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.services.RecommendationRuleService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
