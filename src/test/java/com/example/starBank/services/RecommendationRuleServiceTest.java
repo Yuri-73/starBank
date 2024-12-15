@@ -1,5 +1,6 @@
 package com.example.starBank.services;
 
+import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.repositories.RecommendationsRuleRepository;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class RecommendationRuleServiceTest {
                         "Широкий выбор кредитных продуктов. Мы предлагаем кредиты на различные цели: покупку недвижимости, автомобиля, образование, лечение и многое другое.\n" +
                         "\n" +
                         "Не упустите возможность воспользоваться выгодными условиями кредитования от нашей компании!",
-                UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"), List.of(USER_OF, TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW, TRANSACTION_SUM_COMPARE));
+                UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"), List.of(USER_OF, TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW, TRANSACTION_SUM_COMPARE), new RecommendationCounter());
 
         assertEquals(expectedRecommendation, out.createRecommendationRules(expectedRecommendation));
 
@@ -68,7 +69,7 @@ public class RecommendationRuleServiceTest {
                         "Широкий выбор кредитных продуктов. Мы предлагаем кредиты на различные цели: покупку недвижимости, автомобиля, образование, лечение и многое другое.\n" +
                         "\n" +
                         "Не упустите возможность воспользоваться выгодными условиями кредитования от нашей компании!",
-                UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"), List.of(USER_OF, TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW, TRANSACTION_SUM_COMPARE));
+                UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"), List.of(USER_OF, TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW, TRANSACTION_SUM_COMPARE), new RecommendationCounter());
 
         assertEquals(List.of(expectedRecommendation), out.getAllRecommendationWithRules());
     }

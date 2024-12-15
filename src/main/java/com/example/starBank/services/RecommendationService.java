@@ -85,13 +85,13 @@ public class RecommendationService {
     /*Публичный метод для создания листа рекомендаций (пока пустого), прохода по листу
         объектов класса RecommendationWithRules и вызова приватного метода recommendationAppliance
         */
-    @Cacheable("RecommendationWithRules")
+//    @Cacheable("RecommendationWithRules")
     public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
         List<Recommendation> listOfRecommendation = new ArrayList<>();
         for (RecommendationWithRules r : recommendationsWithRules) {
             if (recommendationAppliance(id, r.getRuleRequirements())) {
                 listOfRecommendation.add(new Recommendation(r.getProductId(), r.getName(), r.getText()));
-                counterRepository.findByRecommendationWithRulesIdAndIncrementCounter(r.getId());
+//                counterRepository.findByRecommendationWithRulesIdAndIncrementCounter(r.getId());
             }
         }
         if (listOfRecommendation.isEmpty()) {
