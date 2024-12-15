@@ -25,7 +25,7 @@ public class RecommendationRuleService {
         return recommendationsRuleRepository.save(recommendationWithRules);
     }
 
-    //@Cacheable("RecommendationWithRules")
+    @Cacheable("RecommendationWithRules")
     public List<RecommendationWithRules> getAllRecommendationWithRules() {
         return recommendationsRuleRepository.findAll();
     }

@@ -10,9 +10,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "recommendation_with_rules")
 public class RecommendationWithRules {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id")
     private Long id;
 
@@ -29,6 +29,7 @@ public class RecommendationWithRules {
     private List<RuleRequirements> ruleRequirements;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "recommendationWithRules", orphanRemoval = true)
+    @JsonIgnore
     private RecommendationCounter recommendationCounter;
 
     public RecommendationWithRules(String name, String text, UUID productId) {
