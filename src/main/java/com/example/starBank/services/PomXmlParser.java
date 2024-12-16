@@ -38,7 +38,6 @@ public class PomXmlParser {
 
         String version = getElementValue(root, "version");
         String name = getElementValue(root, "name");
-        System.out.println("{\n\"name\": " + name + "\n" + "\"version\": " + version + "\n}");
         StringBuilder stringBuilder = new StringBuilder().append("\"name\": ").append(getElementValue(root, "name")).append("\n").append("\"version\": ").append(getElementValue(root, "version"));
         return stringBuilder.toString();
     }
