@@ -119,13 +119,13 @@ class RecommendationServiceTest {
 
         RuleRequirements ruleRequirements = new RuleRequirements();
         ruleRequirements.setId(1l);
-        ruleRequirements.setArguments("argument");
+        ruleRequirements.setArguments("DEPOSIT");
         ruleRequirements.setNegate(true);
         ruleRequirements.setQuery("USER_OF");
 
         RuleRequirements ruleRequirements2 = new RuleRequirements();
         ruleRequirements2.setId(2l);
-        ruleRequirements2.setArguments("argument2");
+        ruleRequirements2.setArguments("DEPOSIT,>");
         ruleRequirements2.setNegate(false);
         ruleRequirements2.setQuery("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW");
 
