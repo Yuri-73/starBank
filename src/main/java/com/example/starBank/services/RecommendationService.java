@@ -14,7 +14,10 @@ import com.example.starBank.repositories.RecommendationsRuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -40,8 +43,7 @@ public class RecommendationService {
 
     /**
      * Метод получения значения amount из БД через репозиторий
-     *
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает 4-значное число amount или 0
      */
     @Autowired
@@ -52,8 +54,7 @@ public class RecommendationService {
 
     /**
      * Метод формирования списка рекомендаций
-     *
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает коллекцию рекомендаций
      */
 
@@ -77,9 +78,12 @@ public class RecommendationService {
         return listOfRecommendation;
     }
 
-    /*Публичный метод для создания листа рекомендаций (пока пустого), прохода по листу
-        объектов класса RecommendationWithRules и вызова приватного метода recommendationAppliance
-        */
+    /**
+     * Метод формирования списка рекоммендаций для клиента
+     * @param id идентификатор клиента
+     * @param recommendationsWithRules лист рекоммендаций в БД
+     * @return Возвращает список полученных рекомендаций
+     */
 //    @Cacheable("RecommendationWithRules")
     public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
         List<Recommendation> listOfRecommendation = new ArrayList<>();
@@ -95,12 +99,12 @@ public class RecommendationService {
         return listOfRecommendation;
     }
 
-    /*Приватный метод для перебора правил из массива и передачу его в метод ruleSwitch, где
-    правило проверяется на выполнение условий.
-    Так же в случае isNegate = true, возвращаемый boolean будет изменен на противоположное значение.
-    В случае если правило не выполнено, следующее правило проверяться не будет и будет возвращено
-    значение false.
-    */
+    /**
+     * Приватный метод для перебора правил из массива и передачу его в метод ruleSwitch, где правило проверяется на выполнение условий.
+     * @param id идентификатор клиента
+     * @param rules лист динамических правил
+     * @return возвращает true при положительном запросе динамического правила
+     */
     private Boolean recommendationAppliance(UUID id, List<RuleRequirements> rules) {
         boolean tmp = false;
         for (RuleRequirements rule : rules) {
@@ -116,11 +120,13 @@ public class RecommendationService {
         return tmp;
     }
 
-
-    /*Приватный метод со switch. Здесь мы проверяем значение query из класса Rule и вызываем
-    соответствующий ему case, где вызывается метод из репозитория.
-    В случае отсутствия нужного case будет возвращено значение false
-    */
+    /**
+     * Проверяется значение query из модели правил для вызова соответствующего ему запроса из репозитория
+     * @param id идентификатор клиента
+     * @param rule динамическое правило
+     * @throws InvalidAmountOfArgumentsException Неверный формат аргумента
+     * @return возвращает общее true при true всех входящих правил в динамическое правило
+     */
     private Boolean ruleSwitch(UUID id, RuleRequirements rule) {
         System.out.println("RuleRequirements rule - " + rule);
         switch (rule.getQuery()) {
@@ -153,5 +159,4 @@ public class RecommendationService {
             }
         }
     }
-
 }
