@@ -104,4 +104,26 @@ class TelegramBotUpdatesListenerTest {
         //control:
         verify(telegramBotMock, times(1)).execute(any(SendMessage.class));
     }
+
+    @Test
+    public void process_NotValidUser_Test() throws URISyntaxException, IOException {
+        //sources:
+        Long id = 1l;
+        final String userMessage = "/recommend sheron";
+
+        Update update = Mockito.mock(Update.class);
+        Message message = Mockito.mock(Message.class);
+        Chat chat = Mockito.mock(Chat.class);
+
+        when(update.message()).thenReturn(message);
+        when(message.text()).thenReturn(userMessage);
+        when(message.chat()).thenReturn(chat);
+        when(chat.id()).thenReturn(id);
+        when(telegramBotMock.execute(any(SendMessage.class))).thenReturn(null);
+
+        //test:
+        out.process(List.of(update));
+        //control:
+        verify(telegramBotMock, times(1)).execute(any(SendMessage.class));
+    }
 }

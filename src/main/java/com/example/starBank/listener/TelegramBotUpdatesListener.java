@@ -16,13 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
-
-    public static final String START = "/start";
-    public static final String RECOMMEND = "/recommend sheron.berge";
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
 
@@ -52,7 +50,7 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
      */
     private void startMessageReceived(Long chatId, String firstName, String lastName) {
         String responseMessage = "Здравствуйте, " + firstName + " " + lastName + "! Банк Стар подберёт для Вас новые продукты!";
-        sendMessage(chatId, responseMessage);  //Вызов внутреннего метода для передачи в итоге текущей задачи пользователю
+        sendMessage(chatId, responseMessage);  //Вызов внутреннего метода для передачи текущей задачи пользователю
     }
 
     /**
@@ -68,9 +66,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
      */
     @Override
     public int process(List<Update> updates) {
-       updates.forEach(update -> {
+        updates.forEach(update -> {
             String messageReceived = update.message().text();
-            System.out.println("messageReceived - " + messageReceived);
             logger.info("Обработка текущей задачи: {}", messageReceived);
 
             if (update.message().chat() == null || messageReceived.isBlank()) {
@@ -78,23 +75,23 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             }
             long chatId = update.message().chat().id(); //Выделение из абдейта идентификатора чата, по которому следует отправить сообщение боту
 
-            if ((START).equals(messageReceived)) {  //Если текст команды соответствует "/start", то выводится соответствующее приветствие пользователю.
+            if (Objects.equals("/start", messageReceived)) {  //Если текст команды соответствует "/start", то выводится соответствующее приветствие пользователю.
                 logger.info("Стартовая команда для бота {}", chatId);
                 startMessageReceived(chatId, update.message().chat().firstName(), update.message().chat().lastName()); //Вызов метода формирования приветственного сообщения с именем зарегистрированного пользователя
                 return;
             }
-            if (messageReceived.startsWith("/recommend") && !messageReceived.equals("/recommend")) {
+            if (messageReceived.matches("/recommend\\s(.+)?")) {
                 logger.info("Команда уведомления для бота {}", chatId);
-
                 String[] parts = update.message().text().split(" ");
-                String userName;
-                UUID id = null;
-                if (parts[0].equals("/recommend")) {
-                    userName = parts[1];
-                    System.out.println(userName);
+                String userName = parts[1];
+                UUID id;
+
+                if (recommendationsRepository.getBooleanUserIdByUsername(userName)) {
                     id = recommendationsRepository.getUserIdByUsername(userName);
-                    System.out.println(userName);
-                    System.out.println(id);
+                } else {
+                    sendMessage(chatId, "Пользователь не найден");
+                    logger.info("Пользователь не найден {}", chatId);
+                    return;
                 }
                 List<RecommendationWithRules> listAll = recommendationsRuleRepository.findAll();
                 List<Recommendation> list = recommendationService.getRecommendation(id, listAll);

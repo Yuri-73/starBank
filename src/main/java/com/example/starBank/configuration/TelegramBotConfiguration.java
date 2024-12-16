@@ -20,7 +20,7 @@ public class TelegramBotConfiguration {
          * Создание бота путем передачи токена, полученного от @BotFather
          */
         TelegramBot bot = new TelegramBot(token);
-        bot.execute(new DeleteMyCommands());  //Что делает new DeleteMyCommands()?   *?*
+        bot.execute(new DeleteMyCommands());
         return bot;
     }
 }

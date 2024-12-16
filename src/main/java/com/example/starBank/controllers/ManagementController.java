@@ -36,8 +36,6 @@ public class ManagementController {
      */
     @PostMapping("/info")
     public String getInfo() throws IOException, ParserConfigurationException, SAXException {
-        String str = null;
-        str = pomXmlParser.getData();
-        return str;
+        return pomXmlParser.getData();
     }
 }

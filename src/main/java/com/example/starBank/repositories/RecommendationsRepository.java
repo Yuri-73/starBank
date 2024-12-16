@@ -153,9 +153,23 @@ public class RecommendationsRepository {
         return answer;
     }
 
-    /** * Метод получения Id клиента по его имени в базе USERS
-     * @param username для поиска id клиента * @return Возвращает id клиента
-     */public UUID getUserIdByUsername(String username) {
+    /** Метод получения Id клиента по его имени в базе USERS
+     * @param username для поиска id клиента
+     * @return Возвращает true/false
+     */
+    public Boolean getBooleanUserIdByUsername(String username) {
+        Boolean answer = jdbcTemplate.queryForObject("SELECT COUNT(*)=1 FROM users " + "WHERE users.username = ?", Boolean.class, username);
+        if (answer == null) {
+            return false;
+        }
+        return answer;
+    }
+
+    /** Метод получения Id клиента по его имени в базе USERS
+     * @param username для поиска id клиента
+     * @return Возвращает id клиента
+     */
+    public UUID getUserIdByUsername(String username) {
         return jdbcTemplate.queryForObject("SELECT users.id FROM users " + "WHERE users.username = ?", UUID.class, username);
     }
 }
