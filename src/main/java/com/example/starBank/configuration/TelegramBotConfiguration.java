@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * Класс-конфигуратор для создания бина telegramBot
+ * @author Yuri-73
  */
 @Configuration
 public class TelegramBotConfiguration {

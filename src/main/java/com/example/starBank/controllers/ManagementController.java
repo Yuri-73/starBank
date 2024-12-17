@@ -10,6 +10,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
+/**
+ * @author Yuri-73
+ */
 @RequestMapping("/management")
 @RestController
 public class ManagementController {

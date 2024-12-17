@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+/**
+ * @author Yuri-73
+ */
 public interface RuleRequirementsRepository extends JpaRepository<RuleRequirements, Long> {
     Optional<RuleRequirements> findByQuery(String userOf);
 }

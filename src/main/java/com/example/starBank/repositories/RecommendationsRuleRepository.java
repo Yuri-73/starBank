@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * @author Yuri-73
+ */
 @Repository
 public interface RecommendationsRuleRepository extends JpaRepository<RecommendationWithRules, Long> {
-
 }

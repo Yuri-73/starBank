@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Chowo
+ */
 public class Constants {
 
     public static final Recommendation INVEST500 = new Recommendation(UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a") , "Invest 500", "Откройте свой путь к успеху с индивидуальным" +

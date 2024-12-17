@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * @author Chowo
+ */
 @Component
 public class Invest500 implements RecommendationRuleSet{
     private final RecommendationsRepository repository;
@@ -24,9 +27,9 @@ public class Invest500 implements RecommendationRuleSet{
     }
 
     /**
-     * Метод формирования рекомендации по условию из полученных значений из БД
-     * @param id для поиска по id клиента банка
-     * @return Возвращает готовую рекомендацию
+     * Метод формирования рекомендации по условию полученных значений из БД Н2
+     * @param id Идентификатор клиента банка
+     * @return Возвращает штатную рекомендацию или пустое значение
      */
     @Override
     public Optional<Recommendation> getRecommendationByRule(UUID id) {

@@ -2,10 +2,19 @@ package com.example.starBank.model;
 
 import java.util.Objects;
 
+/**
+ * @author Chowo
+ */
 public class CounterForShow {
 
+    /**
+     * Порядковый Id рекомендации
+     */
     private Long rule_id;
 
+    /**
+     * Счётчик срабатывания рекомендации по её Id
+     */
     private Long counter;
 
     public CounterForShow(Long rule_id, Long counter) {

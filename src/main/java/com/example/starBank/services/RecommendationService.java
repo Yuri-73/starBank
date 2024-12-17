@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Chowo
+ */
 @Service
 public class RecommendationService {
     private final RecommendationsRepository recommendationsRepository;
@@ -53,7 +56,7 @@ public class RecommendationService {
     }
 
     /**
-     * Метод формирования списка рекомендаций
+     * Метод формирования списка выявленных для клиента рекомендаций
      * @param id id клиента банка
      * @return Возвращает коллекцию рекомендаций
      */
@@ -79,10 +82,10 @@ public class RecommendationService {
     }
 
     /**
-     * Метод формирования списка рекоммендаций для клиента
+     * Метод формирования списка рекоммендаций из БД PostgreSQL для клиента, полученного благодаря анализу в БД Н2
      * @param id идентификатор клиента
      * @param recommendationsWithRules лист рекоммендаций в БД
-     * @return Возвращает список полученных рекомендаций
+     * @return Возвращает список полученных рекомендаций для клиента
      */
 //    @Cacheable("RecommendationWithRules")
     public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
@@ -100,9 +103,10 @@ public class RecommendationService {
     }
 
     /**
-     * Приватный метод для перебора правил из массива и передачу его в метод ruleSwitch, где правило проверяется на выполнение условий.
+     * Метод для перебора правил из массива с начальным анализом, а также передачи его в метод ruleSwitch,
+     * где правило анализируется окончательно на выполнение условий.
      * @param id идентификатор клиента
-     * @param rules лист динамических правил
+     * @param rules лист динамического правила
      * @return возвращает true при положительном запросе динамического правила
      */
     private Boolean recommendationAppliance(UUID id, List<RuleRequirements> rules) {
@@ -121,11 +125,11 @@ public class RecommendationService {
     }
 
     /**
-     * Проверяется значение query из модели правил для вызова соответствующего ему запроса из репозитория
+     * Проверяется значение query из модели правила для вызова соответствующего ему запроса из репозитория
      * @param id идентификатор клиента
-     * @param rule динамическое правило
+     * @param rule атомарное правило
      * @throws InvalidAmountOfArgumentsException Неверный формат аргумента
-     * @return возвращает общее true при true всех входящих правил в динамическое правило
+     * @return возвращает логическое значение при true всех входящих атомарных правил в само динамическое правило
      */
     private Boolean ruleSwitch(UUID id, RuleRequirements rule) {
         System.out.println("RuleRequirements rule - " + rule);

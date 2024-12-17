@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * @author Yuri-73
+ */
 @Entity
 @Table(name = "rule_requirements")
 public class RuleRequirements {
@@ -12,12 +15,21 @@ public class RuleRequirements {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Имя правила
+     */
     @Column(name = "query")
     String query;
 
+    /**
+     * Аргументы для правила
+     */
     @Column(name = "arguments")
     String arguments;
 
+    /**
+     * Инверсный знак для выбора правила
+     */
     @Column(name = "negate")
     boolean negate;
 

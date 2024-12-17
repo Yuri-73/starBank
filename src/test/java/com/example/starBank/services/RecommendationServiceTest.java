@@ -25,6 +25,9 @@ import static com.example.starBank.constants.Constants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
+/**
+ * @author Yuri-73
+ */
 @ExtendWith(MockitoExtension.class)
 class RecommendationServiceTest {
     @Mock

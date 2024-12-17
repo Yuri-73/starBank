@@ -5,6 +5,9 @@ import com.example.starBank.model.RuleRequirements;
 
 import java.util.UUID;
 
+/**
+ * @author Chowo
+ */
 public class RecommendationRuleConstants {
 
     public static final RecommendationWithRules SIMPLECREDIT = new RecommendationWithRules("Простой кредит",

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author Yuri-73
+ */
 @Service
 public class RecommendationRuleService {
 
@@ -18,6 +21,10 @@ public class RecommendationRuleService {
         this.recommendationsRuleRepository = recommendationsRuleRepository;
     }
 
+    /**
+     * Метод для записи в БД PostgreSQL объекта recommendationWithRules
+     * @return Возвращает внесённый объект recommendationWithRules
+     */
     public RecommendationWithRules createRecommendationRules(RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules: " + recommendationWithRules);
         recommendationWithRules.getRuleRequirements().stream()
@@ -26,11 +33,20 @@ public class RecommendationRuleService {
         return recommendationsRuleRepository.save(recommendationWithRules);
     }
 
+    /**
+     * Метод для извлечения из БД PostgreSQL через репозиторий списка объектов рекомендаций
+     * @return Возвращает список объектов recommendationWithRules
+     */
 //    @Cacheable("Recommendations")
     public List<RecommendationWithRules> getAllRecommendationWithRules() {
         return recommendationsRuleRepository.findAll();
     }
 
+    /**
+     * Метод для удаления из БД PostgreSQL через репозиторий объекта рекомендации
+     * @param id Идентификатор рекомендации
+     * @return Возвращает булевое значение
+     */
     public boolean deleteById(Long id) {
         if (recommendationsRuleRepository.existsById(id)) {
             recommendationsRuleRepository.deleteById(id);

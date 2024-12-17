@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author Chowo
+ */
 @RestController
 @RequestMapping("/rule/stats")
 public class RecommendationCounterController {
@@ -19,6 +22,10 @@ public class RecommendationCounterController {
         this.counterService = counterService;
     }
 
+    /**
+     * Метод подсчёта всех определённых рекомендаций
+     * @return Возвращает список  из количества выданных рекомендаций по их идентификатору.
+     */
     @GetMapping
     public ResponseEntity<List<CounterForShow>> getCounters() {
         return ResponseEntity.ok(counterService.getCounterList());

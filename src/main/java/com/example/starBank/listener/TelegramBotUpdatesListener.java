@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * @author Yuri-73
+ */
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
 
@@ -47,6 +50,9 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     /**
      * Метод формирования приветственного сообщения по стартовой команде «/start»)
+     * @param chatId Идентификатор пользователя, зарегистрированного в боте
+     * @param firstName Имя пользователя, зарегистрированного в боте
+     * @param lastName Фамилия пользователя, зарегистрированного в боте
      */
     private void startMessageReceived(Long chatId, String firstName, String lastName) {
         String responseMessage = "Здравствуйте, " + firstName + " " + lastName + "! Банк Стар подберёт для Вас новые продукты!";
@@ -55,6 +61,8 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
     /**
      * Метод получения и отправки уведомлений пользователю банка
+     * @param chatId Идентификатор пользователя, зарегистрированного в боте
+     * @param sendingMessage Текст уведомления для распечатки
      */
     private void sendMessage(Long chatId, String sendingMessage) {
         SendMessage sendMessage = new SendMessage(String.valueOf(chatId), sendingMessage);
@@ -62,7 +70,9 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     }
 
     /**
-     * Связующий метод обработки сообщений
+     * Связующий метод обработки вводных сообщений
+     * Выдаёт предупреждения при неформатном сообщении или неправильном имени клиента банка
+     * @param updates массив вводных сообщений
      */
     @Override
     public int process(List<Update> updates) {

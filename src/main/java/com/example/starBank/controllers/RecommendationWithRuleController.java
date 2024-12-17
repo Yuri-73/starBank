@@ -14,6 +14,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author Yuri-73
+ */
 @RestController
 @RequestMapping("/rule")
 public class RecommendationWithRuleController {
@@ -24,6 +27,11 @@ public class RecommendationWithRuleController {
         this.recommendationRuleService = recommendationRuleService;
     }
 
+    /**
+     * Метод получения объекта рекомендации для записи его в БД
+     * @param recommendationWithRules объект рекомендации
+     * @return Возвращает записанный в БД объект рекомендации.
+     */
     @PostMapping()
     public ResponseEntity<RecommendationWithRules> createRecommendationWithRules(@RequestBody RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules-1: " + recommendationWithRules);
@@ -31,11 +39,20 @@ public class RecommendationWithRuleController {
         return ResponseEntity.ok(recommendationWithRules1);
     }
 
+    /**
+     * Метод получения полного списка рекомендаций
+     * @return Возвращает список рекомендации из БД PostgreSQL
+     */
     @GetMapping()
     public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
     }
 
+    /**
+     * Метод удаления рекомендации из БД
+     * @param id Идентификатор клиента банка PostgreSQL
+     * @return Возвращает статус 204 удалнной рекомендации из БД PostgreSQL или ошибку 400
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<RecommendationWithRules> deleteById(Long id) {
         if (!recommendationRuleService.deleteById(id))

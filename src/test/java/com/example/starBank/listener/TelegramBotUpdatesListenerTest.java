@@ -25,6 +25,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
+/**
+ * @author Yuri-73
+ */
 @ExtendWith(MockitoExtension.class)
 class TelegramBotUpdatesListenerTest {
 

@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * @author Yuri-73
+ */
 @Entity
 @Table(name = "recommendation_with_rules")
 public class RecommendationWithRules {
@@ -16,12 +19,21 @@ public class RecommendationWithRules {
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Имя рекомендации
+     */
     @Column(name = "name")
     private String name;
 
+    /**
+     * Id продукта
+     */
     @Column(name = "product_id")
     private UUID productId;
 
+    /**
+     * Текст рекомендации
+     */
     @Column(name = "text")
     private String text;
 
@@ -97,7 +109,6 @@ public class RecommendationWithRules {
     public void setRuleRequirements(List<RuleRequirements> ruleRequirements) {
         this.ruleRequirements = ruleRequirements;
     }
-
 
     @Override
     public boolean equals(Object o) {

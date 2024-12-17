@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+/**
+ * @author Yuri-73
+ */
 @RestController
 @RequestMapping("/recommendation")
 
@@ -35,7 +38,7 @@ public class RecommendationController {
     /**
      * Метод формирования рекомендаций клиенту по пользованию продуктами банка
      * @param id для поиска по id клиента банка
-     * @return Возвращает клиенту список рекомендаций или пустой список
+     * @return Возвращает клиенту список рекомендаций вне БД или пустой список
      */
     @GetMapping("{id}")
     public ResponseEntity<String> getUser(@PathVariable UUID id) {
@@ -45,7 +48,7 @@ public class RecommendationController {
     /**
      * Метод формирования динамических рекомендаций клиенту по пользованию продуктами банка
      * @param id для поиска по id клиента банка
-     * @return Возвращает клиенту список рекомендаций или пустой список
+     * @return Возвращает клиенту список рекомендаций из БД PostgreSQL, определённый через базу Н2, или пустой список, если условия не соблюдаются.
      */
     @GetMapping("/new/{id}")
     public ResponseEntity<String> getRecommendationForUser(@PathVariable UUID id) {

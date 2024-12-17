@@ -3,6 +3,9 @@ package com.example.starBank.model;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * @author Yuri-73
+ */
 public class Recommendation {
     /**
      * Имя рекомендации

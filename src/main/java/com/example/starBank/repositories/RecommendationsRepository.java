@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * @author Yuri-73
+ */
 @Repository
 public class RecommendationsRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -24,7 +27,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения значения amount из одной транзакции, полученной случайным образом
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает 4-значное число amount или 0
      */
     public int getRandomTransactionAmount(UUID id){
@@ -37,7 +40,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общего количества продуктов типа DEBIT для выбранного клиента
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает общее количество продуктов типа DEBIT (снижено до одного, что удовлетворяет условию)
      */
     public Integer getDebitCount(UUID id) {
@@ -48,8 +51,8 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общего количества продуктов типа INVEST для выбранного клиента
-     * @param id для поиска по id клиента банка
-     * @return Возвращает общее количество продуктов типа INVEST
+     * @param id id клиента банка
+     * @return Возвращает хотя бы 1 продукт типа INVEST
      */
     public Integer getInvestCount(UUID id) {
         return jdbcTemplate.queryForObject(
@@ -59,7 +62,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общей суммы пополнений по продуктам типа SAVING для выбранного клиента
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает общую сумму пополнений по продуктам типа SAVING
      */
     public Integer getSavingAmount(UUID id) {
@@ -74,7 +77,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общей суммы пополнений по продуктам типа DEBIT для выбранного клиента
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает общую сумму пополнений для продуктов типа DEBIT
      */
     public Integer getDebitDepositAmount(UUID id) {
@@ -89,7 +92,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общей суммы трат по продуктам типа DEBIT для выбранного клиента
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает общую сумму трат по продуктам типа DEBIT
      */
     public Integer getDebitWithdrawAmount(UUID id) {
@@ -104,7 +107,7 @@ public class RecommendationsRepository {
 
     /**
      * Метод получения общего количества продуктов типа CREDIT для выбранного клиента
-     * @param id для поиска по id клиента банка
+     * @param id id клиента банка
      * @return Возвращает общее количество продуктов типа CREDIT (снижено до одного, что удовлетворяет условию)
      */
     public Integer getCreditCount(UUID id) {
@@ -113,18 +116,33 @@ public class RecommendationsRepository {
                 Integer.class, id, debit, credit);
     }
 
+    /**
+     * Метод получения определения минимум одного продукта
+     * @param id id клиента банка
+     * @return Возвращает true/false
+     */
     public Boolean getUserOfResult(UUID id, RuleRequirements rule) {
         return jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) >=1  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
                 Boolean.class, id, rule.getArguments());
     }
 
+    /**
+     * Метод получения не менее 5 строк продукта
+     * @param id id клиента банка
+     * @return Возвращает true/false
+     */
     public Boolean getActiveUserOfResult(UUID id, RuleRequirements rule) {
         return jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) >=5  FROM transactions t INNER JOIN products p ON t.product_id = p.id WHERE t.user_id = ? AND p.type = ? LIMIT 1",
                 Boolean.class, id, rule.getArguments());
     }
 
+    /**
+     * Метод определения прохождения заданной суммы определённой транзакции
+     * @param id id клиента банка
+     * @return Возвращает true/false
+     */
     public Boolean getTransactionSumCompareResult(UUID id, RuleRequirements rule) {
         String[] arguments = rule.getArguments().split(",");
         System.out.println("arguments " +arguments[0] +arguments[1]+arguments[2]+arguments[3]);
@@ -138,6 +156,11 @@ public class RecommendationsRepository {
         return answer;
     }
 
+    /**
+     * Метод определения прохождения сравниваемых сумм определённых транзакций
+     * @param id id клиента банка
+     * @return Возвращает true/false
+     */
     public Boolean getTransactionSumCompareDepositWithDrawResult(UUID id, RuleRequirements rule) {
         String[] arguments = rule.getArguments().split(",");
         Boolean answer = jdbcTemplate.queryForObject(
@@ -153,8 +176,8 @@ public class RecommendationsRepository {
         return answer;
     }
 
-    /** Метод получения Id клиента по его имени в базе USERS
-     * @param username для поиска id клиента
+    /** Метод определения Id клиента по его имени в базе USERS
+     * @param username имя клиента
      * @return Возвращает true/false
      */
     public Boolean getBooleanUserIdByUsername(String username) {
@@ -166,7 +189,7 @@ public class RecommendationsRepository {
     }
 
     /** Метод получения Id клиента по его имени в базе USERS
-     * @param username для поиска id клиента
+     * @param username имя клиента
      * @return Возвращает id клиента
      */
     public UUID getUserIdByUsername(String username) {

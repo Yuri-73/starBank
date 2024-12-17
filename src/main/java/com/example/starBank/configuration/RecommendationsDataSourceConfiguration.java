@@ -11,9 +11,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
+/**
+ * @author Yuri-73
+ */
 @Configuration
 public class RecommendationsDataSourceConfiguration {
 
+    /**
+     * Конфигуратор для установки соединения с БД Н2 через настройку источника данных DataSource и работа с JDBC
+     */
     @Bean(name = "recommendationsDataSource")
     public DataSource recommendationsDataSource(@Value("${application.recommendations-db.url}") String recommendationsUrl) {
         var dataSource = new HikariDataSource();

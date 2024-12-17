@@ -11,6 +11,9 @@ import javax.xml.parsers.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author Yuri-73
+ */
 @Service
 public class PomXmlParser {
     private File xmlFile;
@@ -44,6 +47,8 @@ public class PomXmlParser {
 
     /**
      * Метод извлечения объекта Node из листа и преобразования в текст
+     * @param parent Корневой элемент
+     * @param tagName Корневой элемент
      * @return Возвращает строку выбранного контекста
      */
     private static String getElementValue(Element parent, String tagName) {

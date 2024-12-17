@@ -3,6 +3,9 @@ package com.example.starBank.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+/**
+ * @author Chowo
+ */
 @Entity
 public class RecommendationCounter {
 
@@ -14,6 +17,9 @@ public class RecommendationCounter {
     @OneToOne
     private RecommendationWithRules recommendationWithRules;
 
+    /**
+     * Счётчик для рекомендации
+     */
     @Column(name = "counter")
     private Long counter;
 

@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * @author Chowo
+ */
 public interface RecommendationCounterRepository extends JpaRepository<RecommendationCounter, Long> {
     @Transactional
     @Modifying(clearAutomatically = true)
