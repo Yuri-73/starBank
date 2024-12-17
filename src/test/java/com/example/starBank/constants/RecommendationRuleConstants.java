@@ -1,5 +1,6 @@
 package com.example.starBank.constants;
 
+import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 
@@ -27,5 +28,7 @@ public class RecommendationRuleConstants {
     public static final RuleRequirements USER_OF = new RuleRequirements(1L, "USER_OF", "DEPOSIT", true, SIMPLECREDIT);
     public static final RuleRequirements TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW = new RuleRequirements(2L, "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW", "DEPOSIT,>", false, SIMPLECREDIT);
     public static final RuleRequirements TRANSACTION_SUM_COMPARE = new RuleRequirements(3L, "TRANSACTION_SUM_COMPARE", "DEBIT,DEPOSIT,>,100000", false, SIMPLECREDIT);
+
+    public static final RecommendationCounter COUNTER = new RecommendationCounter(SIMPLECREDIT);
 
 }
