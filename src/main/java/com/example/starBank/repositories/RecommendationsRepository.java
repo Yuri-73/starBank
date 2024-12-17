@@ -193,8 +193,11 @@ public class RecommendationsRepository {
      * @return Возвращает id клиента
      */
     public UUID getUserIdByUsername(String username) {
-        return jdbcTemplate.queryForObject("SELECT users.id FROM users " + "WHERE users.username = ?", UUID.class, username);
+        return jdbcTemplate.queryForObject("SELECT users.id FROM users WHERE users.username = ?", UUID.class, username);
     }
+
+
+
 }
 
 
