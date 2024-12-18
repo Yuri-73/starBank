@@ -204,4 +204,3 @@ class RecommendationServiceTest {
         assertEquals(recommendationsByRule.get(0).getText(), "-");
     }
 }
-

@@ -33,6 +33,7 @@ public class RecommendationCounter {
 
     }
 
+
     public Long getCounter() {
         return counter;
     }

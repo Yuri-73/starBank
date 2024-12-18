@@ -3,10 +3,16 @@ package com.example.starBank.controllers;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.model.RuleRequirements;
 import com.example.starBank.services.RecommendationRuleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +23,7 @@ import java.util.UUID;
 /**
  * @author Yuri-73
  */
+
 @RestController
 @RequestMapping("/rule")
 public class RecommendationWithRuleController {
@@ -27,11 +34,25 @@ public class RecommendationWithRuleController {
         this.recommendationRuleService = recommendationRuleService;
     }
 
-    /**
-     * Метод получения объекта рекомендации для записи его в БД
-     * @param recommendationWithRules объект рекомендации
-     * @return Возвращает записанный в БД объект рекомендации.
-     */
+    @Operation(summary = "Внесение в БД JPA PostgreSQL новой рекомендации с динамическим правилом (этап-2 работы)",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Созданная рекомендация с динамическим правилом",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = RecommendationWithRules.class)
+                            )
+                    )
+            },
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Новая рекомендация с динамическим правилом",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = RecommendationWithRules.class)
+                    )
+            )
+    )
     @PostMapping()
     public ResponseEntity<RecommendationWithRules> createRecommendationWithRules(@RequestBody RecommendationWithRules recommendationWithRules) {
         System.out.println("recommendationWithRules-1: " + recommendationWithRules);
@@ -39,22 +60,36 @@ public class RecommendationWithRuleController {
         return ResponseEntity.ok(recommendationWithRules1);
     }
 
-    /**
-     * Метод получения полного списка рекомендаций
-     * @return Возвращает список рекомендации из БД PostgreSQL
-     */
+    @Operation(summary = "Получение всего списка рекомендаций из БД JPA PostgreSQL (этап-2 работы)",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Найденные рекомендации",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = RecommendationWithRules.class)
+                            )
+                    )
+            })
     @GetMapping()
     public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
     }
 
-    /**
-     * Метод удаления рекомендации из БД
-     * @param id Идентификатор клиента банка PostgreSQL
-     * @return Возвращает статус 204 удалнной рекомендации из БД PostgreSQL или ошибку 400
-     */
+    @Operation(summary = "Удаление рекомендации из БД JPA PostgreSQL (этап-2 работы)",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Удаление рекомендации - статус 204, при неудалении - статус 400",
+                            content = @Content(
+                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = RecommendationWithRules.class)
+                            )
+                    )
+            })
     @DeleteMapping("/{id}")
-    public ResponseEntity<RecommendationWithRules> deleteById(Long id) {
+    public ResponseEntity<RecommendationWithRules> deleteById(@Parameter(description = "Идентификатор рекомендации",
+            example = "1") Long id) {
         if (!recommendationRuleService.deleteById(id))
             return ResponseEntity.badRequest().build();
         return ResponseEntity.status(204).build();

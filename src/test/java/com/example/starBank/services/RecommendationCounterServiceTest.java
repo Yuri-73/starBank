@@ -4,6 +4,7 @@ import com.example.starBank.model.CounterForShow;
 import com.example.starBank.model.RecommendationCounter;
 import com.example.starBank.model.RecommendationWithRules;
 import com.example.starBank.repositories.RecommendationCounterRepository;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static com.example.starBank.constants.RecommendationRuleConstants.SIMPLECREDIT;
+import static com.example.starBank.constants.RecommendationRuleConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

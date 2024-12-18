@@ -34,4 +34,6 @@ public class RecommendationRuleConstants {
 
     public static final RecommendationCounter COUNTER = new RecommendationCounter(SIMPLECREDIT);
 
+
+
 }
