@@ -14,10 +14,7 @@ import com.example.starBank.repositories.RecommendationsRuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -87,13 +84,13 @@ public class RecommendationService {
      * @param recommendationsWithRules лист рекоммендаций в БД
      * @return Возвращает список полученных рекомендаций для клиента
      */
-//    @Cacheable("RecommendationWithRules")
+    @Cacheable("RecommendationWithRules")
     public List<Recommendation> getRecommendation(UUID id, List<RecommendationWithRules> recommendationsWithRules) {
         List<Recommendation> listOfRecommendation = new ArrayList<>();
         for (RecommendationWithRules r : recommendationsWithRules) {
             if (recommendationAppliance(id, r.getRuleRequirements())) {
                 listOfRecommendation.add(new Recommendation(r.getProductId(), r.getName(), r.getText()));
-                counterRepository.findByRecommendationWithRulesIdAndIncrementCounter(r.getId());
+                counterRepository.incrementCounterByRecommendationId(r.getId());
             }
         }
         if (listOfRecommendation.isEmpty()) {

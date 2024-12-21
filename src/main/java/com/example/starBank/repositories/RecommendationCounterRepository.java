@@ -1,6 +1,5 @@
 package com.example.starBank.repositories;
 
-import com.example.starBank.model.CounterForShow;
 import com.example.starBank.model.RecommendationCounter;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +16,7 @@ public interface RecommendationCounterRepository extends JpaRepository<Recommend
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE recommendation_counter SET counter = counter + 1 WHERE recommendation_with_rules_id = ?1 ",nativeQuery = true)
-    void findByRecommendationWithRulesIdAndIncrementCounter(@Param("id") Long id);
+    void incrementCounterByRecommendationId(@Param("id") Long id);
 
     @Query(value = "SELECT * FROM recommendation_counter", nativeQuery = true)
     List<RecommendationCounter> getCounters ();
