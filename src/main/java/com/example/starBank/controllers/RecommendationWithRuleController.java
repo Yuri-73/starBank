@@ -40,7 +40,6 @@ public class RecommendationWithRuleController {
                             responseCode = "200",
                             description = "Созданная рекомендация с динамическим правилом",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = RecommendationWithRules.class)
                             )
                     )
@@ -48,7 +47,7 @@ public class RecommendationWithRuleController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Новая рекомендация с динамическим правилом",
                     content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = RecommendationWithRules.class)
                     )
             )
@@ -66,7 +65,6 @@ public class RecommendationWithRuleController {
                             responseCode = "200",
                             description = "Найденные рекомендации",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = RecommendationWithRules.class)
                             )
                     )
@@ -82,7 +80,6 @@ public class RecommendationWithRuleController {
                             responseCode = "200",
                             description = "Удаление рекомендации - статус 204, при неудалении - статус 400",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = RecommendationWithRules.class)
                             )
                     )

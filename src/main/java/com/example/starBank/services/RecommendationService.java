@@ -47,7 +47,7 @@ public class RecommendationService {
     /**
      * Метод получения значения amount из БД через репозиторий
      * @param id id клиента банка
-     * @return Возвращает 4-значное число amount или 0
+     * @return Возвращает значение amount или 0
      */
     @Autowired
     RecommendationsRuleRepository recommendationsRuleRepository;

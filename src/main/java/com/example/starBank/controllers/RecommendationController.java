@@ -41,7 +41,6 @@ public class RecommendationController {
                             responseCode = "200",
                             description = "Значение amount указывает на валидное подключение к JDBC драйверу",
                             content = @Content(
-                                    mediaType = "MediaType.APPLICATION_JSON_VALUE",
                                     array = @ArraySchema(schema = @Schema(implementation = Recommendation.class))
                             )
                     )
@@ -62,7 +61,6 @@ public class RecommendationController {
                             responseCode = "200",
                             description = "Найденные рекомендации без использования БД",
                             content = @Content(
-                                    mediaType = "MediaType.APPLICATION_JSON_VALUE",
                                     array = @ArraySchema(schema = @Schema(implementation = Recommendation.class))
                             )
                     )
@@ -83,7 +81,6 @@ public class RecommendationController {
                      responseCode = "200",
                      description = "Найденные рекомендации",
                      content = @Content(
-                             mediaType = "MediaType.APPLICATION_JSON_VALUE",
                              array = @ArraySchema(schema = @Schema(implementation = Recommendation.class))
                      )
              )

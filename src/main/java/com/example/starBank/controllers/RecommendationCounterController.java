@@ -38,7 +38,6 @@ public class RecommendationCounterController {
                             responseCode = "200",
                             description = "Список счётчиков для определённых рекомендаций",
                             content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = PomXmlParser.class)
                             )
                     )
