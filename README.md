@@ -21,7 +21,8 @@
 ## 4. Разработчики:
 1. [Владимир Ходаковский](https://github.com/Chowo);
 2. [Юрий Федейкин](https://github.com/Yuri-73).
-![Components diagram Star Bank (Bank)](https://github.com/user-attachments/assets/ac1e8ecb-8065-40ff-b752-717d472d30a5)
+
+![Components diagram Star Bank](https://github.com/user-attachments/assets/5938ebfd-6006-4844-8f1e-305d8fc4dffc)
 
 ![Class diagram Star Bank](https://github.com/user-attachments/assets/02d1e51c-d5a8-4ebe-a139-87805ece7f3d)
 
