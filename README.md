@@ -1,5 +1,7 @@
 # 1. Назначение приложения
-Проект starBank предназначен для предоставления рекомендаций продукции пользователю в зависимости от использования им ранее услуг. Стек технологий: Spring, PostgreSQL, Swagger, JDBS, JPA, Hibernate, Telegram bot.
+Проект starBank предназначен для предоставления рекомендаций продукции пользователю в зависимости от использования им ранее услуг. 
+
+Стек технологий: Spring, PostgreSQL, Swagger, JDBS, JPA, Hibernate, Telegram bot.
 
 # 2. Архитектура приложения
 Архитектура приложения описана в [Wiki](https://github.com/Yuri-73/starBank/wiki), а также её представляют диаграммы, вложенные в корневую папку.
@@ -24,3 +26,4 @@
 ![Class diagram Star Bank](https://github.com/user-attachments/assets/02d1e51c-d5a8-4ebe-a139-87805ece7f3d)
 
 ![Activity diagram (combined)](https://github.com/user-attachments/assets/e141a4d7-270b-46a5-b948-81ed7c6f78b5)
+
