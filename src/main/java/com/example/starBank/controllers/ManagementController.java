@@ -41,7 +41,9 @@ public class ManagementController {
                                     schema = @Schema(implementation = PomXmlParser.class)
                             )
                     )
-            })
+            },
+            tags = "RecommendationCounterController(сброс кеша)"
+    )
     @PostMapping("/clear-caches")
     @CacheEvict(cacheNames = "Recommendations", allEntries = true)
     public void clearCache() {}
@@ -62,7 +64,9 @@ public class ManagementController {
                                     schema = @Schema(implementation = PomXmlParser.class)
                             )
                     )
-            })
+            },
+            tags = "RecommendationCounterController(контент проекта)"
+    )
     @PostMapping("/info")
     public String getInfo() throws IOException, ParserConfigurationException, SAXException {
         return pomXmlParser.getData();
