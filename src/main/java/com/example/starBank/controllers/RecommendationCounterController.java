@@ -30,6 +30,7 @@ public class RecommendationCounterController {
 
     /**
      * Метод подсчёта всех определённых рекомендаций
+     *
      * @return Возвращает список  из количества выданных рекомендаций по их идентификатору.
      */
     @Operation(summary = "Подсчёт полученных рекомендаций по их идентификатору (этап-3 работы)",
@@ -41,7 +42,9 @@ public class RecommendationCounterController {
                                     schema = @Schema(implementation = PomXmlParser.class)
                             )
                     )
-            })
+            },
+            tags = "RecommendationCounterController(счётчик)"
+    )
     @GetMapping
     public ResponseEntity<List<CounterForShow>> getCounters() {
         return ResponseEntity.ok(counterService.getCounterList());

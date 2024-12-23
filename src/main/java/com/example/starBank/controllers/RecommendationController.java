@@ -45,7 +45,7 @@ public class RecommendationController {
                             )
                     )
             },
-            tags = "recommendations"
+            tags = "recommendationsController(тест-проверка)"
     )
     @GetMapping("/test/{id}")
     public int test(@Parameter(description = "Идентификатор клиента",
@@ -65,7 +65,7 @@ public class RecommendationController {
                             )
                     )
             },
-            tags = "recommendations"
+            tags = "recommendationsController(тест-проверка)"
     )
     @GetMapping("{id}")
     public ResponseEntity<String> getUser(@Parameter(description = "Идентификатор клиента",
@@ -85,12 +85,11 @@ public class RecommendationController {
                      )
              )
         },
-        tags = "recommendations"
+        tags = "recommendationsController(динамика)"
     )
     @GetMapping("/new/{id}")
     public ResponseEntity<String> getRecommendationForUser(@Parameter(description = "Идентификатор клиента",
-            example = "1f9b149c-6577-448a-bc94-16bea229b71a")
-                                                               @PathVariable UUID id) {
+            example = "1f9b149c-6577-448a-bc94-16bea229b71a") @PathVariable UUID id) {
         return ResponseEntity.ok("user_id: " + id + ",\n" + "recommendations: " + service.getRecommendation(id, ruleService.getAllRecommendationWithRules()).toString());
     }
 }
