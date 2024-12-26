@@ -45,7 +45,7 @@ public class ManagementController {
             tags = "RecommendationCounterController(сброс кеша)"
     )
     @PostMapping("/clear-caches")
-    @CacheEvict(cacheNames = "Recommendations", allEntries = true)
+    @CacheEvict(cacheNames = "RecommendationWithRules", allEntries = true)
     public void clearCache() {}
 
     /**
