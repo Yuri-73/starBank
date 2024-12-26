@@ -20,7 +20,7 @@ public class RecommendationCounterService {
     }
 
     /**
-     * Преобразование списка счётчиков RecommendationCounter в список счётчиков CounterForShow
+     * Преобразование списка счётчиков объектов RecommendationCounter в список счётчиков объектов CounterForShow
      * @return Возвращает список
      */
     public List<CounterForShow> getCounterList() {
