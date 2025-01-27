@@ -20,7 +20,7 @@ public class RecommendationCounterService {
     }
 
     /**
-     * Метод формирования списка счётчиков по порядковому номеру рекомендации через вызов списка объектов RecommendationCounter
+     * Преобразование списка счётчиков объектов RecommendationCounter в список счётчиков объектов CounterForShow
      * @return Возвращает список
      */
     public List<CounterForShow> getCounterList() {

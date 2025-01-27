@@ -47,10 +47,11 @@ public class RecommendationWithRuleController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Новая рекомендация с динамическим правилом",
                     content = @Content(
-//                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            mediaType = MediaType.APPLICATION_JSON_VALUE,
                             schema = @Schema(implementation = RecommendationWithRules.class)
                     )
-            )
+            ),
+            tags = "RecommendationRuleService(внесение рекомендации в БД PostgreSQL)"
     )
     @PostMapping()
     public ResponseEntity<RecommendationWithRules> createRecommendationWithRules(@RequestBody RecommendationWithRules recommendationWithRules) {
@@ -68,7 +69,9 @@ public class RecommendationWithRuleController {
                                     schema = @Schema(implementation = RecommendationWithRules.class)
                             )
                     )
-            })
+            },
+            tags = "RecommendationRuleService(список рекомендаций в БД PostgreSQL)"
+    )
     @GetMapping()
     public ResponseEntity<Collection<RecommendationWithRules>> getAllRecommendationWithRules() {
         return ResponseEntity.ok(recommendationRuleService.getAllRecommendationWithRules());
@@ -83,7 +86,9 @@ public class RecommendationWithRuleController {
                                     schema = @Schema(implementation = RecommendationWithRules.class)
                             )
                     )
-            })
+            },
+            tags = "RecommendationRuleService(удаление рекомендации из БД PostgreSQL)"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<RecommendationWithRules> deleteById(@Parameter(description = "Идентификатор рекомендации",
             example = "1") Long id) {

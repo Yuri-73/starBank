@@ -69,7 +69,7 @@ public class Recommendation {
 
     @Override
     public String toString() {
-        return "recommendations: {" +
+        return "recommendation: {" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
                 ", text='" + text + '\'' +
